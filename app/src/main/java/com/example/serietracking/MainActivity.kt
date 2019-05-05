@@ -51,4 +51,9 @@ class MainActivity : AppCompatActivity(), Callback<TVModel> {
 //            recyclerView!!.adapter = recyclerAdapter
         }
     }
+
+    override fun onFailure(call: Call<TVModel>?, t: Throwable?) {
+        print("error")
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 }
