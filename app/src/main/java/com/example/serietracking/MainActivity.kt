@@ -25,15 +25,11 @@ import com.bumptech.glide.Glide
 //data class Capitulo(val title: String, val year: Int, val image: String)
 
 //TODO: ESta impoementacion del callback no deberia ir aca, pero se hizo aca para probar que la conexion con la BD funcione bien.
-class MainActivity : AppCompatActivity(), Callback<TVModel> {
-
+class MainActivity : AppCompatActivity(), Callback<SeasonModel> {
 
     private val capitulos  = listOf(
-        Capitulo("Raising Arizona", "GOT","S03E04"),
-        Capitulo("ME VOY A LLEVAR ANDROID A MARZO", "UTN","S03E04")
+        Capitulo("Raising Arizona", "GOT","S03E04")
     ).toMutableList()
-
-
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -77,9 +73,8 @@ class MainActivity : AppCompatActivity(), Callback<TVModel> {
         Glide.with(this).load("https://image.tmdb.org/t/p/w500/iflq7ZJfso6WC7gk9l1tD3unWK.jpg").into(imageView)
         initSwipe()
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-        ApiClient.apiInterface.getPopular(HttpConstants.API_KEY).enqueue(this)
-
-
+        ApiClient.apiInterface.getSeasonOfGOT(HttpConstants.API_KEY).enqueue(this)
+//        ApiClient.apiInterface.getPopular(HttpConstants.API_KEY).enqueue(this)
     }
 
 
@@ -94,7 +89,6 @@ class MainActivity : AppCompatActivity(), Callback<TVModel> {
             }
 
 
-
             override fun onChildDraw(c: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
 
             //    val icon: Bitmap
@@ -102,7 +96,7 @@ class MainActivity : AppCompatActivity(), Callback<TVModel> {
 
                     val itemView = viewHolder.itemView
                     val height = itemView.bottom.toFloat() - itemView.top.toFloat()
-                    val width = height / 3
+//                    val width = height / 3
 
                     if (dX > 0) {
 
@@ -145,37 +139,25 @@ class MainActivity : AppCompatActivity(), Callback<TVModel> {
                   //  alertDialog!!.show()
                 }
             }
-
-
-
         }
 
         val itemTouchHelper = ItemTouchHelper(simpleItemTouchCallback)
         itemTouchHelper.attachToRecyclerView(list_recycler_view)
-
-
         }
 
-    override fun onResponse(call: Call<TVModel>?, response: Response<TVModel>?) {
+    override fun onResponse(call: Call<SeasonModel>?, response: Response<SeasonModel>?) {
         if (response!!.isSuccessful) {
-            //en response esta todo lo que se necesita ya modelado. ahi hay un for de como ir uno por uno viendo algo que necesitemos
-            Log.d("log","response")
 
+           for (item: SeasonModel.Episode in response.body().episodes!!) {
 
-
-           for (item: TVModel.TVShow in response.body().results!!) {
-             capitulos.add(Capitulo(item.name.toString(),"123","123"))
-               Log.d("log",item.backdropPath.toString())
-              // println(item.original_name)
+             capitulos.add(Capitulo(item.name.toString(),"",item.episodeNumber.toString()))
             }
 
             viewAdapter.notifyDataSetChanged();
-//            var recyclerAdapter = RecyclerViewAdapter(this, response.body().results!!)
-//            recyclerView!!.adapter = recyclerAdapter
         }
     }
 
-    override fun onFailure(call: Call<TVModel>?, t: Throwable?) {
+    override fun onFailure(call: Call<SeasonModel>?, t: Throwable?) {
         print("error")
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }

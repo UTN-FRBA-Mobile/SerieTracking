@@ -1,18 +1,18 @@
 package com.example.serietracking.network
 
-import com.example.serietracking.CreateSessionBody
-import com.example.serietracking.CreateSessionModel
-import com.example.serietracking.RequestTokenModel
+import com.example.serietracking.*
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
-import com.example.serietracking.TVModel
 import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface ApiInterface {
     @GET("tv/popular")
     fun getPopular(@Query("api_key") api_key: String): Call<TVModel>
+
+    @GET("tv/1399/season/1")
+    fun getSeasonOfGOT(@Query("api_key") api_key: String): Call<SeasonModel>
 
     @GET("authentication/token/new")
     fun createRequestToken(@Query("api_key") api_key: String): Call<RequestTokenModel>
