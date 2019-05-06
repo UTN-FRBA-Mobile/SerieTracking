@@ -42,7 +42,7 @@ class RecyclerAdapter(private val tvShows: List<TVModel.TVShow>) : RecyclerView.
 
         fun bindTVShow(tvShow: TVModel.TVShow) {
             this.tvShow = tvShow
-            Picasso.with(view.context).load("https://image.tmdb.org/t/p/original" + tvShow.posterPath).into(view.itemImage)
+            Picasso.with(view.context).load("https://image.tmdb.org/t/p/w500" + tvShow.posterPath).into(view.itemImage)
 //            Glide.with(view.context).load("https://image.tmdb.org/t/p/w500/" + tvShow.posterPath).into(view.itemImage)
 
             view.itemTitle.text = tvShow.name
