@@ -60,7 +60,7 @@
                     android:shadowDx="0"
                     android:shadowDy="0"
                     android:shadowRadius="10"
-                    android:text="un titulo"
+                    android:text="Game of thrones"
                     android:textColor="#FFFFFF" />
 
         </RelativeLayout>
