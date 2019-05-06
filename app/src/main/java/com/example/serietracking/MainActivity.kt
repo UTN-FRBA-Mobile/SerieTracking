@@ -27,6 +27,9 @@ import com.bumptech.glide.Glide
 //TODO: ESta impoementacion del callback no deberia ir aca, pero se hizo aca para probar que la conexion con la BD funcione bien.
 class MainActivity : AppCompatActivity(), Callback<SeasonModel> {
 
+
+
+
     private val capitulos  = listOf(
         Capitulo("Raising Arizona", "GOT","S03E04")
     ).toMutableList()
