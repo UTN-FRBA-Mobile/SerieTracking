@@ -1,4 +1,5 @@
 package com.example.serietracking
+import android.content.Intent
 import android.graphics.Canvas
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -38,6 +39,10 @@ class MainActivity : AppCompatActivity(), Callback<SeasonModel> {
         when (item.itemId) {
             R.id.navigation_home -> {
                 //message.setText(R.string.title_home)
+
+                val intent = Intent(this, TVShowsGeneralActivity::class.java)
+                startActivity(intent)
+
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_dashboard -> {
