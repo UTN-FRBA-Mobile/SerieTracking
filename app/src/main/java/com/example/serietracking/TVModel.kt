@@ -5,9 +5,9 @@ class TVModel {
     var page: Int = 0
     var total_results: Int = 0
     var total_pages: Int = 0
-    var results: List<ResultsEntity>? = null
+    var results: List<TVShow>? = null
 
-    class ResultsEntity {
+    class TVShow {
         @SerializedName("poster_path") var posterPath: String? = null
         var popularity: Double = 0.toDouble()
         var id: Int = 0

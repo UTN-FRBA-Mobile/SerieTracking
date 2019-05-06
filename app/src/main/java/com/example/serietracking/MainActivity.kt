@@ -168,7 +168,7 @@ class MainActivity : AppCompatActivity(), Callback<TVModel> {
 
 
 
-           for (item: TVModel.ResultsEntity in response.body().results!!) {
+           for (item: TVModel.TVShow in response.body().results!!) {
              capitulos.add(Capitulo(item.original_name.toString(),"123","123"))
                Log.d("log",item.backdrop_path.toString())
               // println(item.original_name)

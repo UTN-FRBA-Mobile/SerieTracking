@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:padding="8dp"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+    <ImageView
+            android:id="@+id/itemImage"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="8dp"
+            android:adjustViewBounds="true"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+
+        <TextView
+                android:id="@+id/itemTitle"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:layout_toEndOf="@id/itemImage"
+                android:layout_toRightOf="@id/itemImage"
+                android:layout_alignTop="@id/itemImage"
+                android:text="HOLA HOLA HOla" android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true" android:layout_marginRight="295dp"
+                android:layout_marginEnd="0dp"/>
+
+
+        <TextView
+                android:id="@+id/itemDescription"
+                android:layout_width="50dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center|start"
+                android:layout_weight="1"
+                android:text="Chau chau chau"
+                android:ellipsize="end"
+                android:maxLines="5"
+                android:layout_toEndOf="@id/itemImage"
+                android:layout_toRightOf="@id/itemImage"
+                android:layout_below="@id/itemTitle"
+                android:layout_alignParentEnd="true" android:layout_alignParentRight="true"
+                android:layout_marginRight="0dp" android:layout_marginEnd="0dp"/>
+
+    </RelativeLayout>
+</LinearLayout>
