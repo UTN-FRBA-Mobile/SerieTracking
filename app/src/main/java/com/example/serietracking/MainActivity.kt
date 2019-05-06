@@ -28,6 +28,9 @@ import com.bumptech.glide.Glide
 class MainActivity : AppCompatActivity(), Callback<TVModel> {
 
 
+
+
+
     private val capitulos  = listOf(
         Capitulo("Raising Arizona", "GOT","S03E04"),
         Capitulo("ME VOY A LLEVAR ANDROID A MARZO", "UTN","S03E04")
