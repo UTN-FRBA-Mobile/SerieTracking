@@ -31,9 +31,7 @@ class MainActivity : AppCompatActivity(), Callback<SeasonModel> {
 
 
 
-    private val capitulos  = listOf(
-        Capitulo("Raising Arizona", "GOT","S03E04")
-    ).toMutableList()
+    private val capitulos = mutableListOf<Capitulo>()
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -138,7 +136,11 @@ class MainActivity : AppCompatActivity(), Callback<SeasonModel> {
                 val position = viewHolder.adapterPosition
                 Log.d("log","FGF")
                 if (direction == ItemTouchHelper.LEFT) {
-                  //  adapter!!.removeItem(position)
+
+                    capitulos.removeAt(position)
+                    viewAdapter.notifyDataSetChanged();
+
+                    //adapter!!.removeItem(position)
                 } else {
                  //   removeView()
                    // edit_position = position
