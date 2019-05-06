@@ -4,7 +4,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.*
 
 
 import com.example.serietracking.network.ApiClient
@@ -15,10 +14,6 @@ import retrofit2.Response
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 
@@ -169,8 +164,8 @@ class MainActivity : AppCompatActivity(), Callback<TVModel> {
 
 
            for (item: TVModel.TVShow in response.body().results!!) {
-             capitulos.add(Capitulo(item.original_name.toString(),"123","123"))
-               Log.d("log",item.backdrop_path.toString())
+             capitulos.add(Capitulo(item.name.toString(),"123","123"))
+               Log.d("log",item.backdropPath.toString())
               // println(item.original_name)
             }
 
