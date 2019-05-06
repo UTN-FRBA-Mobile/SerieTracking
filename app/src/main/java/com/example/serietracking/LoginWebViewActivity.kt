@@ -2,6 +2,7 @@ package com.example.serietracking
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.webkit.WebView
 import com.example.serietracking.network.ApiClient
 import com.example.serietracking.network.HttpConstants
@@ -18,8 +19,10 @@ class LoginWebViewActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login_web_view)
 
+        Log.d("log","calling create request token")
         ApiClient.apiInterface.createRequestToken(HttpConstants.API_KEY).enqueue(object: Callback<RequestTokenModel> {
             override fun onResponse(call: Call<RequestTokenModel>, response: Response<RequestTokenModel>) {
+                Log.d("log","create request token finished")
                 response.body().let { requestTokenResponse ->
                     val myWebView: WebView = findViewById(R.id.webview)
                     myWebView.getSettings().setJavaScriptEnabled(true);
@@ -41,18 +44,20 @@ class LoginWebViewActivity : AppCompatActivity() {
                                     }
 
                                     override fun onFailure(call: Call<CreateSessionModel>, t: Throwable) {
-                                        //Toast.makeText(activity, "No tweets founds!", Toast.LENGTH_SHORT).show()
+                                        Log.e("log","failed to create session", t)
                                     }
                                 })
                             }
                         }
                     }
+                    Log.d("log","loading login")
                     myWebView.loadUrl("https://www.themoviedb.org/authenticate/" + requestTokenResponse.requestToken)
                 }
             }
 
             override fun onFailure(call: Call<RequestTokenModel>, t: Throwable) {
                 //Toast.makeText(activity, "No tweets founds!", Toast.LENGTH_SHORT).show()
+                Log.e("log","failed to create request token", t)
             }
         })
     }
