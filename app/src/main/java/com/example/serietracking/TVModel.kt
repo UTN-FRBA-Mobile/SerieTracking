@@ -4,12 +4,12 @@ import com.google.gson.annotations.SerializedName
 
 class TVModel {
     var page: Int = 0
-    var total_results: Int = 0
-    var total_pages: Int = 0
+    var totalResults: Int = 0
+    var totalPages: Int = 0
     var results: List<TVShow>? = null
 
     class TVShow {
-        @SerializedName("poster_path") var posterPath: String? = null
+        var posterPath: String? = null
         var popularity: Double = 0.toDouble()
         var id: Int = 0
         var backdropPath: String? = null
@@ -21,6 +21,6 @@ class TVModel {
         var originalLanguage: String? = null
         var voteCount: Int = 0
         var name: String? = null
-        var original_name: String? = null
+        var originalName: String? = null
     }
 }

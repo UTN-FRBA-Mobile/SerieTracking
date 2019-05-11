@@ -13,9 +13,11 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 import com.example.serietracking.*
+import com.example.serietracking.account.AccountService
 import com.example.serietracking.login.dto.CreateSessionRequest
 import com.example.serietracking.login.dto.CreateSessionResponse
 import com.example.serietracking.login.dto.RequestTokenResponse
+import com.example.serietracking.network.ErrorLoggingCallback
 
 
 class LoginWebViewActivity : AppCompatActivity() {
@@ -24,7 +26,7 @@ class LoginWebViewActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login_web_view)
 
         Log.d("log","calling create request token")
-        ApiClient.apiInterface.createRequestToken(HttpConstants.API_KEY).enqueue(object: Callback<RequestTokenResponse> {
+        ApiClient.apiInterface.createRequestToken(HttpConstants.API_KEY).enqueue(object: ErrorLoggingCallback<RequestTokenResponse>() {
             override fun onResponse(call: Call<RequestTokenResponse>, response: Response<RequestTokenResponse>) {
                 Log.d("log","create request token finished")
                 response.body().let { requestTokenResponse ->
@@ -40,17 +42,19 @@ class LoginWebViewActivity : AppCompatActivity() {
                             if (".*/authenticate/.*/allow".toRegex().matches(url)) {
                                 ApiClient.apiInterface.createSession(HttpConstants.API_KEY,
                                     CreateSessionRequest(requestTokenResponse.requestToken)
-                                ).enqueue(object: Callback<CreateSessionResponse> {
+                                ).enqueue(object: ErrorLoggingCallback<CreateSessionResponse>() {
                                     override fun onResponse(call: Call<CreateSessionResponse>, response: Response<CreateSessionResponse>) {
                                         response.body().let { createSessionResponse ->
-                                            createSessionResponse.sessionId
-                                            val intent = Intent(this@LoginWebViewActivity, MainActivity::class.java)
-                                            startActivity(intent)
+                                            AccountService.setSessionId(createSessionResponse.sessionId)
+                                            AccountService.getFavorite(object: ErrorLoggingCallback<TVModel>() {
+                                                override fun onResponse(call: Call<TVModel>, response: Response<TVModel>) {
+                                                    if (response.body().results!!.isNotEmpty()) {
+                                                        val intent = Intent(this@LoginWebViewActivity, MainActivity::class.java)
+                                                        startActivity(intent)
+                                                    }
+                                                }
+                                            })
                                         }
-                                    }
-
-                                    override fun onFailure(call: Call<CreateSessionResponse>, t: Throwable) {
-                                        Log.e("log","failed to create session", t)
                                     }
                                 })
                             }
@@ -59,11 +63,6 @@ class LoginWebViewActivity : AppCompatActivity() {
                     Log.d("log","loading login")
                     myWebView.loadUrl("https://www.themoviedb.org/authenticate/" + requestTokenResponse.requestToken)
                 }
-            }
-
-            override fun onFailure(call: Call<RequestTokenResponse>, t: Throwable) {
-                //Toast.makeText(activity, "No tweets founds!", Toast.LENGTH_SHORT).show()
-                Log.e("log","failed to create request token", t)
             }
         })
     }
