@@ -1,8 +1,10 @@
 package com.example.serietracking
 
-import androidx.appcompat.app.AppCompatActivity
+import android.app.Activity
 import android.os.Bundle
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.serietracking.account.AccountService
 import com.example.serietracking.network.ApiClient
 import com.example.serietracking.network.ErrorLoggingCallback
 import com.example.serietracking.network.HttpConstants
@@ -10,7 +12,7 @@ import kotlinx.android.synthetic.main.activity_tv_shows_general.*
 import retrofit2.Call
 import retrofit2.Response
 
-class TVShowsGeneralActivity : AppCompatActivity() {
+class TVShowsGeneralActivity : FragmentActivity() {
 
     private lateinit var linearLayoutManager: LinearLayoutManager
 
@@ -22,7 +24,11 @@ class TVShowsGeneralActivity : AppCompatActivity() {
 
         val thisActivity = this
 
-        ApiClient.apiInterface.getPopular(HttpConstants.API_KEY).enqueue(object: ErrorLoggingCallback<TVModel>() {
+        // Getting all extras
+        val extras = intent.extras
+        val strategy = extras.getString("strategy", "all")
+
+        val callback = object: ErrorLoggingCallback<TVModel>() {
             override fun onResponse(call: Call<TVModel>?, response: Response<TVModel>?) {
                 if (response!!.isSuccessful) {
 
@@ -34,6 +40,11 @@ class TVShowsGeneralActivity : AppCompatActivity() {
                     series_recylcer.adapter = adapter
                 }
             }
-        })
+        }
+
+        when(strategy) {
+            "user" -> AccountService.getFavorite(callback)
+            else -> ApiClient.apiInterface.getPopular(HttpConstants.API_KEY).enqueue(callback)
+        }
     }
 }

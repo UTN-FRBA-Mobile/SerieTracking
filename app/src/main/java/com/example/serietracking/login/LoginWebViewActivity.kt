@@ -49,7 +49,8 @@ class LoginWebViewActivity : AppCompatActivity() {
                                             AccountService.getFavorite(object: ErrorLoggingCallback<TVModel>() {
                                                 override fun onResponse(call: Call<TVModel>, response: Response<TVModel>) {
                                                     if (response.body().results!!.isNotEmpty()) {
-                                                        val intent = Intent(this@LoginWebViewActivity, MainActivity::class.java)
+                                                        val intent = Intent(this@LoginWebViewActivity, TVShowsGeneralActivity::class.java)
+                                                        intent.putExtra("strategy", "user")
                                                         startActivity(intent)
                                                     }
                                                 }
