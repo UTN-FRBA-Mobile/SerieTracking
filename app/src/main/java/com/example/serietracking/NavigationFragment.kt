@@ -32,6 +32,10 @@ class NavigationFragment : Fragment() {
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.navigation_notifications -> {
+                    val intent = Intent(activity, TVShowsGeneralActivity::class.java)
+                    intent.putExtra("strategy", "user")
+                    startActivity(intent)
+
                     //message.setText(R.string.title_notifications)
                     return@OnNavigationItemSelectedListener true
                 }

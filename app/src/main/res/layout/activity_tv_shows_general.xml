@@ -30,6 +30,7 @@
     app:layout_constraintTop_toBottomOf="@id/title"/>
 
     <fragment android:name="com.example.serietracking.NavigationFragment"
+              android:id="@+id/navigation_fragment"
               android:layout_width="0dp"
               android:layout_height="wrap_content"
               app:layout_constraintBottom_toBottomOf="parent"
