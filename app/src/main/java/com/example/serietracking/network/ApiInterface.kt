@@ -18,6 +18,9 @@ interface ApiInterface {
     @GET("tv/{tv_id}")
     fun getTV(@Path("tv_id") tv_id: Long, @Query("api_key") api_key: String): Call<TVCompleteModel>
 
+    @GET("search/tv")
+    fun searchTV(@Query("query") query: String, @Query("api_key") api_key: String): Call<TVModel>
+
     @GET("tv/{tv_id}/season/{season_id}")
     fun getSeason(@Path("tv_id") tv_id: Long, @Path("season_id") season_id: Long,
                   @Query("api_key") api_key: String): Call<SeasonModel>
