@@ -15,6 +15,13 @@ interface ApiInterface {
     @GET("tv/1399/season/1")
     fun getSeasonOfGOT(@Query("api_key") api_key: String): Call<SeasonModel>
 
+    @GET("tv/{tv_id}")
+    fun getTV(@Path("tv_id") tv_id: Long, @Query("api_key") api_key: String): Call<TVCompleteModel>
+
+    @GET("tv/{tv_id}/season/{season_id}")
+    fun getSeason(@Path("tv_id") tv_id: Long, @Path("season_id") season_id: Long,
+                  @Query("api_key") api_key: String): Call<SeasonModel>
+
     @GET("authentication/token/new")
     fun createRequestToken(@Query("api_key") api_key: String): Call<RequestTokenResponse>
 
