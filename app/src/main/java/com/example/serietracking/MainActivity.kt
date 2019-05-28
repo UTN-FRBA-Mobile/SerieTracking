@@ -29,6 +29,28 @@ import com.bumptech.glide.Glide
 class MainActivity : AppCompatActivity(), Callback<SeasonModel> {
     private val capitulos = mutableListOf<Capitulo>()
 
+    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+        when (item.itemId) {
+            R.id.navigation_home -> {
+                //message.setText(R.string.title_home)
+
+                val intent = Intent(this, TVShowsGeneralActivity::class.java)
+                startActivity(intent)
+
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.navigation_dashboard -> {
+                //message.setText(R.string.title_dashboard)
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.navigation_notifications -> {
+                //message.setText(R.string.title_notifications)
+                return@OnNavigationItemSelectedListener true
+            }
+        }
+        false
+    }
+
     val viewAdapter = ListAdapter(capitulos)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,6 +74,7 @@ class MainActivity : AppCompatActivity(), Callback<SeasonModel> {
 
         Glide.with(this).load("https://image.tmdb.org/t/p/w500/iflq7ZJfso6WC7gk9l1tD3unWK.jpg").into(imageView)
         initSwipe()
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         ApiClient.apiInterface.getSeasonOfGOT(HttpConstants.API_KEY).enqueue(this)
 //        ApiClient.apiInterface.getPopular(HttpConstants.API_KEY).enqueue(this)
     }
