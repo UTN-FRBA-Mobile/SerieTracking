@@ -12,7 +12,7 @@ import com.example.serietracking.TVModel
 import com.squareup.picasso.Picasso
 
 
-class RecyclerAdapter(private val tvShows: List<TVModel.TVShow>) : RecyclerView.Adapter<RecyclerAdapter.TVHolder>() {
+class RecyclerAdapter(private val tvShows: List<TVShow>) : RecyclerView.Adapter<RecyclerAdapter.TVHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerAdapter.TVHolder {
         val inflatedView = parent.inflate(R.layout.recyclerview_tvshow_item_row, false)
         return TVHolder(inflatedView)
@@ -27,7 +27,7 @@ class RecyclerAdapter(private val tvShows: List<TVModel.TVShow>) : RecyclerView.
 
     class TVHolder(v: View) : RecyclerView.ViewHolder(v), View.OnClickListener {
         private var view: View = v
-        private var tvShow: TVModel.TVShow? = null
+        private var tvShow: TVShow? = null
 
         //3
         init {
@@ -40,7 +40,7 @@ class RecyclerAdapter(private val tvShows: List<TVModel.TVShow>) : RecyclerView.
             Log.d("RecyclerView", "CLICK!")
         }
 
-        fun bindTVShow(tvShow: TVModel.TVShow) {
+        fun bindTVShow(tvShow: TVShow) {
             this.tvShow = tvShow
             Picasso.with(view.context).load("https://image.tmdb.org/t/p/w500" + tvShow.posterPath).into(view.itemImage)
 //            Glide.with(view.context).load("https://image.tmdb.org/t/p/w500/" + tvShow.posterPath).into(view.itemImage)

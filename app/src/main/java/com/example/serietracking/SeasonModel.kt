@@ -1,20 +1,15 @@
 package com.example.serietracking
 
-class SeasonModel {
-    var _id: String? = null
-    var airDate: String? = null
-    var id: Int = 0
-    var posterPath: String? = null
-    var seasonNumber: Int = 0
+data class SeasonModel(val _id: String,
+                       val airDate: String,
+                       val id: Int,
+                       val posterPath: String,
+                       val seasonNumber: Int,
+                       val episodes: List<Episode>)
 
-    var episodes: List<Episode>? = null
-
-    class Episode {
-        var airDate: String? = null
-        var episodeNumber: Int = 0
-        var name: String? = null
-        var id: Int = 0
-        var seasonNumber: Int = 0
-        var voteCount: Int = 0
-    }
-}
+data class Episode(val airDate: String,
+                   var episodeNumber: Int,
+                   var name: String,
+                   var id: Int,
+                   var seasonNumber: Int,
+                   var voteCount: Int)

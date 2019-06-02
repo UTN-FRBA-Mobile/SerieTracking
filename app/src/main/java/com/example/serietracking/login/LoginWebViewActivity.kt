@@ -38,6 +38,7 @@ class LoginWebViewActivity : AppCompatActivity() {
                         }
 
                         override fun onPageFinished(view: WebView, url: String) {
+                            Log.i("log", "Received url: " + url)
                             if (".*/authenticate/.*/allow".toRegex().matches(url)) {
                                 ApiClient.apiInterface.createSession(HttpConstants.API_KEY,
                                     CreateSessionRequest(requestTokenResponse.requestToken)

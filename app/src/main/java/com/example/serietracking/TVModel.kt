@@ -1,26 +1,20 @@
 package com.example.serietracking
 
-import com.google.gson.annotations.SerializedName
+data class TVModel(val page: Int,
+                   val totalResults: Int,
+                   val totalPages: Int,
+                   val results: List<TVShow>)
 
-class TVModel {
-    var page: Int = 0
-    var totalResults: Int = 0
-    var totalPages: Int = 0
-    var results: List<TVShow>? = null
-
-    class TVShow {
-        var posterPath: String? = null
-        var popularity: Double = 0.toDouble()
-        var id: Int = 0
-        var backdropPath: String? = null
-        var voteAverage: Double = 0.toDouble()
-        var overview: String? = null
-        var originCountry: List<String>? = null
-        var firstAirDate: String? = null
-        var genreIds: List<Int>? = null
-        var originalLanguage: String? = null
-        var voteCount: Int = 0
-        var name: String? = null
-        var originalName: String? = null
-    }
-}
+data class TVShow(val posterPath: String,
+                  val popularity: Double,
+                  val id: Long,
+                  val backdropPath: String,
+                  val voteAverage: Double,
+                  val overview: String,
+                  val originCountry: List<String>,
+                  val firstAirDate: String,
+                  val genreIds: List<Int>,
+                  val originalLanguage: String?,
+                  val voteCount: Int,
+                  val name: String,
+                  val originalName: String)

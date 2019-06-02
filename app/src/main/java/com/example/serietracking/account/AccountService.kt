@@ -1,5 +1,6 @@
 package com.example.serietracking.account
 
+import com.example.serietracking.TVCompleteModel
 import com.example.serietracking.TVModel
 import com.example.serietracking.account.dto.AccountResponse
 import com.example.serietracking.network.ApiClient
@@ -21,5 +22,18 @@ object AccountService {
                 ApiClient.apiInterface.getFavorite(response.body().id, API_KEY, sessionId!!).enqueue(callback)
             }
         })
+    }
+
+    fun getNextCaps(tvModel: TVModel) {
+        tvModel.results!!.forEach { show ->
+            ApiClient.apiInterface.getTV(show.id, API_KEY).enqueue(object: ErrorLoggingCallback<TVCompleteModel>() {
+                override fun onResponse(call: Call<TVCompleteModel>, response: Response<TVCompleteModel>) {
+                    val tvCompleteModel = response.body()
+                    if (tvCompleteModel.inProduction) {
+                        tvCompleteModel.seasons.last().seasonNumber
+                    }
+                }
+            })
+        }
     }
 }

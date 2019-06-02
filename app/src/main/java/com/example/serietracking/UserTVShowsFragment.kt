@@ -36,7 +36,7 @@ class UserTVShowsFragment : FragmentActivity() {
                     linearLayoutManager = LinearLayoutManager(thisActivity)
                     series_recylcer.layoutManager = linearLayoutManager
 
-                    val tvShows: List<TVModel.TVShow> = response.body().results!!
+                    val tvShows: List<TVShow> = response.body().results
                     adapter = RecyclerAdapter(tvShows)
                     series_recylcer.adapter = adapter
                 }
