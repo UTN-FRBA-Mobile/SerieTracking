@@ -1,6 +1,5 @@
 package com.example.serietracking
 
-import android.content.Context
 import android.content.Intent
 import androidx.fragment.app.Fragment
 import android.os.Bundle
@@ -21,7 +20,7 @@ class NavigationFragment : Fragment() {
                 R.id.navigation_home -> {
                     //message.setText(R.string.title_home)
 
-                    val intent = Intent(activity, TVShowsGeneralActivity::class.java)
+                    val intent = Intent(activity, UserTVShowsFragment::class.java)
                     intent.putExtra("strategy", "all")
                     startActivity(intent)
 
@@ -32,7 +31,7 @@ class NavigationFragment : Fragment() {
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.navigation_notifications -> {
-                    val intent = Intent(activity, TVShowsGeneralActivity::class.java)
+                    val intent = Intent(activity, UserTVShowsFragment::class.java)
                     intent.putExtra("strategy", "user")
                     startActivity(intent)
 

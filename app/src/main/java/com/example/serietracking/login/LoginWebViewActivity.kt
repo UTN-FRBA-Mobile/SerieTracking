@@ -7,7 +7,6 @@ import android.webkit.WebView
 import com.example.serietracking.network.ApiClient
 import com.example.serietracking.network.HttpConstants
 import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.Response
 import android.webkit.WebResourceRequest
 import android.webkit.WebViewClient
@@ -49,7 +48,7 @@ class LoginWebViewActivity : AppCompatActivity() {
                                             AccountService.getFavorite(object: ErrorLoggingCallback<TVModel>() {
                                                 override fun onResponse(call: Call<TVModel>, response: Response<TVModel>) {
                                                     if (response.body().results!!.isNotEmpty()) {
-                                                        val intent = Intent(this@LoginWebViewActivity, TVShowsGeneralActivity::class.java)
+                                                        val intent = Intent(this@LoginWebViewActivity, UserTVShowsFragment::class.java)
                                                         intent.putExtra("strategy", "user")
                                                         startActivity(intent)
                                                     }

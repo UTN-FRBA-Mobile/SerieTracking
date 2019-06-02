@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity(), Callback<SeasonModel> {
             R.id.navigation_home -> {
                 //message.setText(R.string.title_home)
 
-                val intent = Intent(this, TVShowsGeneralActivity::class.java)
+                val intent = Intent(this, UserTVShowsFragment::class.java)
                 startActivity(intent)
 
                 return@OnNavigationItemSelectedListener true

@@ -12,7 +12,8 @@ import kotlinx.android.synthetic.main.activity_tv_shows_general.*
 import retrofit2.Call
 import retrofit2.Response
 
-class TVShowsGeneralActivity : FragmentActivity() {
+class UserTVShowsFragment : FragmentActivity() {
+    //TODO: Sacar la Query GetPopular, si no tiene series propias, mostrar un label que diga que no tenes series.
 
     private lateinit var linearLayoutManager: LinearLayoutManager
 
