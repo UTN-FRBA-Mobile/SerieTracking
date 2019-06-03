@@ -1,8 +1,10 @@
 package com.example.serietracking
 
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
@@ -28,12 +30,14 @@ class MovieViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     private var mTitleView: TextView? = null
     private var mEpisodioView: TextView? = null
     private var mSerieView: TextView? = null
+    private var mContenedor: LinearLayout? = null
 
 
     init {
         mTitleView = itemView.findViewById(R.id.titulo)
         mEpisodioView = itemView.findViewById(R.id.episodio)
         mSerieView = itemView.findViewById(R.id.serie)
+        mContenedor = itemView.findViewById(R.id.contenedor)
 
 
     }
@@ -42,6 +46,10 @@ class MovieViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         mTitleView?.text = movie.titulo
         mEpisodioView?.text = movie.episodio
         mSerieView?.text = movie.serie
+       /// mTitleView?.setTextColor(250);
+
+        mContenedor?.setBackgroundColor(if(movie.seen) Color.GREEN else Color.WHITE);
+
     }
 
 }
