@@ -1,51 +1,52 @@
-package com.example.serietracking
+package com.example.serietracking.Fragments
 
-import android.app.Activity
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.serietracking.account.AccountService
+import com.example.serietracking.Adapters.ExploreRecyclerAdapter
+import com.example.serietracking.R
+import com.example.serietracking.TVModel
 import com.example.serietracking.network.ApiClient
 import com.example.serietracking.network.ErrorLoggingCallback
 import com.example.serietracking.network.HttpConstants
-import kotlinx.android.synthetic.main.activity_tv_shows_general.*
+import kotlinx.android.synthetic.main.fragment_explore_tvshows.*
 import retrofit2.Call
 import retrofit2.Response
 
-class UserTVShowsFragment : FragmentActivity() {
-    //TODO: Sacar la Query GetPopular, si no tiene series propias, mostrar un label que diga que no tenes series.
-
+// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+class ExploreTVShowsFragment : FragmentActivity() {
     private lateinit var linearLayoutManager: LinearLayoutManager
 
-    private lateinit var adapter: RecyclerAdapter
+    private lateinit var adapter: ExploreRecyclerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_tv_shows_general)
+        setContentView(R.layout.fragment_explore_tvshows)
 
         val thisActivity = this
-
-        // Getting all extras
-        val extras = intent.extras
-        val strategy = extras.getString("strategy", "all")
 
         val callback = object: ErrorLoggingCallback<TVModel>() {
             override fun onResponse(call: Call<TVModel>?, response: Response<TVModel>?) {
                 if (response!!.isSuccessful) {
 
                     linearLayoutManager = LinearLayoutManager(thisActivity)
-                    series_recylcer.layoutManager = linearLayoutManager
+                    exploreRecyclerView.layoutManager = linearLayoutManager
 
                     val tvShows: List<TVModel.TVShow> = response.body().results!!
-                    adapter = RecyclerAdapter(tvShows)
-                    series_recylcer.adapter = adapter
+                    adapter = ExploreRecyclerAdapter(tvShows)
+                    exploreRecyclerView.adapter = adapter
                 }
             }
         }
-
-        when(strategy) {
-            "user" -> AccountService.getFavorite(callback)
-            else -> ApiClient.apiInterface.getPopular(HttpConstants.API_KEY).enqueue(callback)
-        }
+        ApiClient.apiInterface.getPopular(HttpConstants.API_KEY).enqueue(callback)
     }
+
+    fun addTvShowToFavorite() {
+        //TODO: Agregar la query posta
+//        ApiClient.apiInterface.addTVSerie
+    }
+
+
 }
+
+

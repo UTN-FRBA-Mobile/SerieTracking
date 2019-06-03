@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.ViewGroup
 import android.view.LayoutInflater
 import android.view.View
+import com.example.serietracking.Fragments.UserTVShowsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 

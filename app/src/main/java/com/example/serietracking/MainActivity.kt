@@ -22,6 +22,8 @@ import androidx.recyclerview.widget.RecyclerView
 
 
 import com.bumptech.glide.Glide
+import com.example.serietracking.Fragments.ExploreTVShowsFragment
+import com.example.serietracking.Fragments.UserTVShowsFragment
 
 //data class Capitulo(val title: String, val year: Int, val image: String)
 
@@ -41,6 +43,8 @@ class MainActivity : AppCompatActivity(), Callback<SeasonModel> {
             }
             R.id.navigation_dashboard -> {
                 //message.setText(R.string.title_dashboard)
+                val intent = Intent(this, ExploreTVShowsFragment::class.java)
+                startActivity(intent)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_notifications -> {

@@ -12,6 +12,7 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 import com.example.serietracking.*
+import com.example.serietracking.Fragments.UserTVShowsFragment
 import com.example.serietracking.account.AccountService
 import com.example.serietracking.login.dto.CreateSessionRequest
 import com.example.serietracking.login.dto.CreateSessionResponse
