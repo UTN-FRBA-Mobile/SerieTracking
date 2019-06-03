@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.serietracking.Adapters.ExploreRecyclerAdapter
 import com.example.serietracking.R
 import com.example.serietracking.TVModel
+import com.example.serietracking.TVShow
 import com.example.serietracking.network.ApiClient
 import com.example.serietracking.network.ErrorLoggingCallback
 import com.example.serietracking.network.HttpConstants
@@ -32,7 +33,8 @@ class ExploreTVShowsFragment : FragmentActivity() {
                     linearLayoutManager = LinearLayoutManager(thisActivity)
                     exploreRecyclerView.layoutManager = linearLayoutManager
 
-                    val tvShows: List<TVModel.TVShow> = response.body().results!!
+                    val tvs = response.body()
+                    val tvShows: List<TVShow> = tvs.results
                     adapter = ExploreRecyclerAdapter(tvShows)
                     exploreRecyclerView.adapter = adapter
                 }

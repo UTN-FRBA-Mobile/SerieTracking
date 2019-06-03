@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.serietracking.Adapters.UserRecyclerAdapter
 import com.example.serietracking.R
 import com.example.serietracking.TVModel
+import com.example.serietracking.TVShow
 import com.example.serietracking.account.AccountService
 import com.example.serietracking.network.ErrorLoggingCallback
 import kotlinx.android.synthetic.main.fragment_user_tvshows.*
@@ -32,9 +33,11 @@ class UserTVShowsFragment : FragmentActivity() {
                     linearLayoutManager = LinearLayoutManager(thisActivity)
                     userRecyclerView.layoutManager = linearLayoutManager
 
-                    val tvShows: List<TVModel.TVShow> = response.body().results!!
+                    val tvShows: List<TVShow> = response.body().results!!
                     adapter = UserRecyclerAdapter(tvShows)
                     userRecyclerView.adapter = adapter
+
+                    //                    AccountService.getNextCaps(tvs, {(_) -> Unit})
                 }
             }
         }

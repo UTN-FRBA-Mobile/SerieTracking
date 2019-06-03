@@ -6,11 +6,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.serietracking.R
 import com.example.serietracking.TVModel
+import com.example.serietracking.TVShow
 import com.example.serietracking.inflate
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.tvshow_item.view.*
 
-class ExploreRecyclerAdapter(private val tvShows: List<TVModel.TVShow>) : RecyclerView.Adapter<ExploreRecyclerAdapter.TVHolder>() {
+class ExploreRecyclerAdapter(private val tvShows: List<TVShow>) : RecyclerView.Adapter<ExploreRecyclerAdapter.TVHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TVHolder {
         val inflatedView = parent.inflate(R.layout.explore_tvshow_item, false)
         return TVHolder(inflatedView)
@@ -25,7 +26,7 @@ class ExploreRecyclerAdapter(private val tvShows: List<TVModel.TVShow>) : Recycl
 
     class TVHolder(v: View) : RecyclerView.ViewHolder(v), View.OnClickListener {
         private var view: View = v
-        private var tvShow: TVModel.TVShow? = null
+        private var tvShow: TVShow? = null
 
         //3
         init {
@@ -39,7 +40,7 @@ class ExploreRecyclerAdapter(private val tvShows: List<TVModel.TVShow>) : Recycl
 
         }
 
-        fun bindTVShow(tvShow: TVModel.TVShow) {
+        fun bindTVShow(tvShow: TVShow) {
             this.tvShow = tvShow
             Picasso.with(view.context).load("https://image.tmdb.org/t/p/w500" + tvShow.posterPath).into(view.itemImage)
 //            Glide.with(view.context).load("https://image.tmdb.org/t/p/w500/" + tvShow.posterPath).into(view.itemImage)
