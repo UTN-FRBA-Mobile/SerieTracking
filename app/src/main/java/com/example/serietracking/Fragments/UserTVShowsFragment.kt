@@ -3,12 +3,14 @@ package com.example.serietracking.Fragments
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.serietracking.Adapters.ExploreRecyclerAdapter
 import com.example.serietracking.Adapters.UserRecyclerAdapter
 import com.example.serietracking.R
 import com.example.serietracking.TVModel
 import com.example.serietracking.TVShow
 import com.example.serietracking.account.AccountService
 import com.example.serietracking.network.ErrorLoggingCallback
+import kotlinx.android.synthetic.main.fragment_explore_tvshows.*
 import kotlinx.android.synthetic.main.fragment_user_tvshows.*
 import retrofit2.Call
 import retrofit2.Response
@@ -33,10 +35,10 @@ class UserTVShowsFragment : FragmentActivity() {
                     linearLayoutManager = LinearLayoutManager(thisActivity)
                     userRecyclerView.layoutManager = linearLayoutManager
 
-                    val tvShows: List<TVShow> = response.body().results!!
+                    val tvs = response.body()
+                    val tvShows: List<TVShow> = tvs.results
                     adapter = UserRecyclerAdapter(tvShows)
                     userRecyclerView.adapter = adapter
-
                     //                    AccountService.getNextCaps(tvs, {(_) -> Unit})
                 }
             }
