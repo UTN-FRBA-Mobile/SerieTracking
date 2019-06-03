@@ -1,9 +1,11 @@
 package com.example.serietracking
 
+import java.io.Serializable
+
 data class TVModel(val page: Int,
                    val totalResults: Int,
                    val totalPages: Int,
-                   val results: List<TVShow>)
+                   val results: List<TVShow>): Serializable
 
 data class TVShow(val posterPath: String,
                   val popularity: Double,
@@ -17,4 +19,4 @@ data class TVShow(val posterPath: String,
                   val originalLanguage: String?,
                   val voteCount: Int,
                   val name: String,
-                  val originalName: String)
+                  val originalName: String): Serializable
