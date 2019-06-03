@@ -36,9 +36,12 @@ class UserTVShowsFragment : FragmentActivity() {
                     linearLayoutManager = LinearLayoutManager(thisActivity)
                     series_recylcer.layoutManager = linearLayoutManager
 
-                    val tvShows: List<TVShow> = response.body().results
+                    val tvs = response.body()
+                    val tvShows: List<TVShow> = tvs.results
                     adapter = RecyclerAdapter(tvShows)
                     series_recylcer.adapter = adapter
+
+                    AccountService.getNextCaps(tvs, {(_) -> Unit})
                 }
             }
         }

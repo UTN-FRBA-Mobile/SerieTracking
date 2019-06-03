@@ -1,6 +1,7 @@
 package com.example.serietracking.login
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import android.webkit.WebView
@@ -33,11 +34,12 @@ class LoginWebViewActivity : AppCompatActivity() {
                     myWebView.getSettings().setJavaScriptEnabled(true);
                     myWebView.webViewClient = object : WebViewClient() {
                         override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
+                            Log.i("log", "Received url for rendering: " + request.url.toString())
                             view.loadUrl(request.url.toString())
                             return false
                         }
 
-                        override fun onPageFinished(view: WebView, url: String) {
+                        override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
                             Log.i("log", "Received url: " + url)
                             if (".*/authenticate/.*/allow".toRegex().matches(url)) {
                                 ApiClient.apiInterface.createSession(HttpConstants.API_KEY,

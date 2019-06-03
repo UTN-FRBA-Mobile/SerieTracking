@@ -154,7 +154,7 @@ class MainActivity : AppCompatActivity(), Callback<SeasonModel> {
     override fun onResponse(call: Call<SeasonModel>?, response: Response<SeasonModel>?) {
         if (response!!.isSuccessful) {
 
-           for (item: SeasonModel.Episode in response.body().episodes!!) {
+           for (item: Episode in response.body().episodes) {
 
              capitulos.add(Capitulo(item.name.toString(),"",item.episodeNumber.toString()))
             }
