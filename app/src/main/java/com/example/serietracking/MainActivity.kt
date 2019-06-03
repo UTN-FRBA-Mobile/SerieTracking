@@ -1,7 +1,5 @@
 package com.example.serietracking
-import android.content.Context
 import android.content.Intent
-import android.graphics.Canvas
 import kotlinx.android.synthetic.main.activity_main.*
 
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -15,8 +13,6 @@ import retrofit2.Callback
 import retrofit2.Response
 
 import android.os.Bundle
-import android.util.Log
-import androidx.core.content.edit
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 
@@ -24,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 
 import com.bumptech.glide.Glide
+import com.example.serietracking.Adapters.ListAdapter
 import com.example.serietracking.Fragments.ExploreTVShowsFragment
 import com.example.serietracking.Fragments.UserTVShowsFragment
 

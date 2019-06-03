@@ -1,12 +1,12 @@
-package com.example.serietracking
-
-
+package com.example.serietracking.Adapters
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.serietracking.Capitulo
+import com.example.serietracking.R
 
 class ListAdapter(private val list: List<Capitulo>)
     : RecyclerView.Adapter<MovieViewHolder>() {
@@ -20,9 +20,7 @@ class ListAdapter(private val list: List<Capitulo>)
         val movie: Capitulo = list[position]
         holder.bind(movie)
     }
-
     override fun getItemCount(): Int = list.size
-
 }
 
 class MovieViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
@@ -32,22 +30,17 @@ class MovieViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     private var mSerieView: TextView? = null
     private var mContenedor: LinearLayout? = null
 
-
     init {
         mTitleView = itemView.findViewById(R.id.titulo)
         mEpisodioView = itemView.findViewById(R.id.episodio)
         mSerieView = itemView.findViewById(R.id.serie)
         mContenedor = itemView.findViewById(R.id.contenedor)
-
-
     }
 
     fun bind(movie: Capitulo) {
         mTitleView?.text = movie.titulo
         mEpisodioView?.text = movie.episodio
         mSerieView?.text = movie.serie
-       /// mTitleView?.setTextColor(250);
-
         mContenedor?.setBackgroundColor(if(movie.seen) Color.GREEN else Color.WHITE);
 
     }
