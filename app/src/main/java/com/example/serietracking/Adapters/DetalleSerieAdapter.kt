@@ -1,19 +1,21 @@
 package com.example.serietracking.Adapters
 import android.graphics.Color
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.serietracking.Capitulo
 import com.example.serietracking.R
+import com.example.serietracking.inflate
+import kotlinx.android.synthetic.main.tvshow_details_episode.view.*
 
-class ListAdapter(private val list: List<Capitulo>)
-    : RecyclerView.Adapter<MovieViewHolder>() {
+class ListAdapter(private val list: List<Capitulo>): RecyclerView.Adapter<MovieViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        return MovieViewHolder(inflater, parent)
+        val inflatedView = parent.inflate(R.layout.tvshow_details_episode, false)
+        return MovieViewHolder(inflatedView)
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
@@ -23,26 +25,41 @@ class ListAdapter(private val list: List<Capitulo>)
     override fun getItemCount(): Int = list.size
 }
 
-class MovieViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
-    RecyclerView.ViewHolder(inflater.inflate(R.layout.capitulo_item, parent, false)) {
-    private var mTitleView: TextView? = null
-    private var mEpisodioView: TextView? = null
-    private var mSerieView: TextView? = null
-    private var mContenedor: LinearLayout? = null
+class MovieViewHolder(v: View) : RecyclerView.ViewHolder(v), View.OnClickListener {
+
+
+
+    private var view: View = v
+    private var episode: Capitulo? = null
+
+//
+//    private var mTitleView: TextView? = null
+//    private var mEpisodioView: TextView? = null
+//    private var mSerieView: TextView? = null
+//    private var mContenedor: LinearLayout? = null
 
     init {
-        mTitleView = itemView.findViewById(R.id.titulo)
-        mEpisodioView = itemView.findViewById(R.id.episodio)
-        mSerieView = itemView.findViewById(R.id.serie)
-        mContenedor = itemView.findViewById(R.id.contenedor)
+        v.setOnClickListener(this)
     }
 
-    fun bind(movie: Capitulo) {
-        mTitleView?.text = movie.titulo
-        mEpisodioView?.text = movie.episodio
-        mSerieView?.text = movie.serie
-        mContenedor?.setBackgroundColor(if(movie.seen) Color.GREEN else Color.WHITE);
+//    init {
+//        mTitleView = itemView.findViewById(R.id.titleTextView)
+//        mEpisodioView = itemView.findViewById(R.id.episodeTextView)
+//        mSerieView = itemView.findViewById(R.id.numberOfEpisodeTextView)
+//        mContenedor = itemView.findViewById(R.id.contenedor)
+//    }
 
+
+    override fun onClick(v: View?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    fun bind(episode: Capitulo) {
+        this.episode = episode
+        view.titleTextView.text = episode.titulo
+        view.episodeTextView.text = ""
+        view.numberOfEpisodeTextView.text = episode.episodio
+        view.contenedor.setBackgroundColor(if (episode.seen) Color.GREEN else Color.WHITE )
     }
 
 }

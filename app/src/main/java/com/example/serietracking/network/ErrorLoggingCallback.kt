@@ -6,6 +6,7 @@ import retrofit2.Callback
 
 abstract class ErrorLoggingCallback<T> : Callback<T> {
     override fun onFailure(call: Call<T>, t: Throwable) {
+
         Log.e("log","failed to connect to the service", t)
     }
 }

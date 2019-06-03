@@ -2,43 +2,40 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              android:layout_height="80dp"
               android:id="@+id/contenedor">
+
     <TextView
             android:paddingLeft="20dp"
-            android:text="nombreSerie"
+            android:text="Episodio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/serie"/>
+            android:id="@+id/episodeTextView"/>
 
     <LinearLayout
-
             android:id="@+id/eighty_percent_layout_holder"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="1">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
 
         <TextView
-                android:id="@+id/titulo"
+                android:id="@+id/titleTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.8"
-                android:textSize="20sp"
+                android:textSize="13sp"
                 android:paddingLeft="20dp"
                 android:paddingTop="7dp"
                 android:paddingBottom="15dp"
-                android:text="TituloSerie"/>
+                android:text="TituloCapitulo"/>
         <TextView
-            android:id="@+id/episodio"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.2"
-            android:text="S3E41"
- />
-
-
-</LinearLayout>
-
+                android:id="@+id/numberOfEpisodeTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2"
+                android:text="S3E41"
+        />
+    </LinearLayout>
 
 </LinearLayout>
