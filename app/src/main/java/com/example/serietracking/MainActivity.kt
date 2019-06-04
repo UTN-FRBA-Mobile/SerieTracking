@@ -8,6 +8,7 @@ import com.example.serietracking.Fragments.ExploreTVShowsFragment
 import com.example.serietracking.Fragments.UserTVShowsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import android.util.Log
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 
@@ -41,10 +42,7 @@ class MainActivity : AppCompatActivity() {
                             args.putSerializable("tvs", tvs)
                             fragment.arguments = args
 
-                            val transaction = supportFragmentManager.beginTransaction()
-                            transaction.replace(fragment_container.id, fragment)
-                            transaction.addToBackStack(null)
-                            transaction.commit()
+                            openFragment(fragment)
                         }
                     }
                 }
@@ -52,10 +50,6 @@ class MainActivity : AppCompatActivity() {
 
 
                 //message.setText(R.string.title_home)
-
-
-                //val intent = Intent(this, UserTVShowsFragment::class.java)
-                //startActivity(intent)
 
                 return@OnNavigationItemSelectedListener true
             }
@@ -69,10 +63,7 @@ class MainActivity : AppCompatActivity() {
                             args.putSerializable("tvs", tvs)
                             fragment.arguments = args
 
-                            val transaction = supportFragmentManager.beginTransaction()
-                            transaction.replace(fragment_container.id, fragment)
-                            transaction.addToBackStack(null)
-                            transaction.commit()
+                            openFragment(fragment)
                         }
                     }
                 }
@@ -89,6 +80,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
         false
+    }
+
+    private fun openFragment(fragment: Fragment) {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(fragment_container.id, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

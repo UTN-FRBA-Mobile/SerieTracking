@@ -25,30 +25,6 @@ class UserTVShowsFragment : Fragment() {
     private lateinit var adapter: UserRecyclerAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        //super.onCreateView(inflater, container, savedInstanceState)
-        //setContentView(R.layout.fragment_user_tvshows)
-
-
-
-        /*val callback = object: ErrorLoggingCallback<TVModel>() {
-            override fun onResponse(call: Call<TVModel>?, response: Response<TVModel>?) {
-                if (response!!.isSuccessful) {
-                    val tvs = response.body()
-                    val tvShows: List<TVShow> = tvs.results
-                    adapter = UserRecyclerAdapter(tvShows)
-                    userRecyclerView.adapter = adapter
-
-                    linearLayoutManager = LinearLayoutManager(inflater.context)
-                    userRecyclerView.layoutManager = linearLayoutManager
-
-                    inflater.inflate(com.example.serietracking.R.layout.fragment_user_tvshows, container, false)
-
-                    //                    AccountService.getNextCaps(tvs, {(_) -> Unit})
-                }
-            }
-        }
-        AccountService.getFavorite(callback)*/
-
         return inflater.inflate(com.example.serietracking.R.layout.fragment_user_tvshows, container, false)
 
     }
