@@ -3,6 +3,7 @@ package com.example.serietracking
 data class TVCompleteModel(
     val id: Long,
     val inProduction: Boolean,
+    val name: String,
     val seasons: List<TVCompleteSeasonModel>
 )
 

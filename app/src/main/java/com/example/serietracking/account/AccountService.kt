@@ -1,10 +1,11 @@
 package com.example.serietracking.account
 
-import com.example.serietracking.MultiCallProccesor
+import com.example.serietracking.RichEpisode
+import com.example.serietracking.multicall.MultiCallProccesor
 import com.example.serietracking.SeasonModel
-import com.example.serietracking.TVCompleteModel
 import com.example.serietracking.TVModel
 import com.example.serietracking.account.dto.AccountResponse
+import com.example.serietracking.multicall.Callable
 import com.example.serietracking.network.ApiClient
 import com.example.serietracking.network.ErrorLoggingCallback
 import com.example.serietracking.network.HttpConstants.API_KEY
@@ -27,19 +28,37 @@ object AccountService {
         })
     }
 
-    fun getNextCaps(tvModel: TVModel, callback: (List<SeasonModel>) -> Unit) {
+    fun getFavoriteNextCaps(callback: (List<RichEpisode>) -> Unit) {
+        this.getFavorite(object: ErrorLoggingCallback<TVModel>() {
+            override fun onResponse(call: Call<TVModel>, response: Response<TVModel>) {
+                this@AccountService.getNextCaps(response.body(), callback)
+            }
+        })
+    }
+
+    fun getNextCaps(tvModel: TVModel, callback: (List<RichEpisode>) -> Unit) {
         val today = LocalDate.now()
-        val calls = tvModel.results.map { ApiClient.apiInterface.getTV(it.id, API_KEY) }
+        val calls = tvModel.results.map { Callable(ApiClient.apiInterface.getTV(it.id, API_KEY), {r ->
+            val episode = RichEpisode()
+            episode.tv = r
+            return@Callable episode
+        })}
         val processor = MultiCallProccesor(calls)
         processor.enqueue { results ->
-            val seasonCalls = results.filter { it.inProduction }.map {
-                ApiClient.apiInterface.getSeason(it.id, it.seasons.last().seasonNumber, API_KEY)
+            val seasonCalls = results.filter { it.tv!!.inProduction }.map {
+                Callable(ApiClient.apiInterface.getSeason(it.tv!!.id, it.tv!!.seasons.last().seasonNumber, API_KEY), { s ->
+                    it.season = s
+                    return@Callable it
+                })
             }
-            val seasonProcessor = MultiCallProccesor(seasonCalls)
-            seasonProcessor.enqueue { seasons ->
-                val seasonsWithUpdates = seasons.filter { season ->
-                    season.episodes.any { LocalDate.parse(it.airDate).compareTo(today) >= 0 }
+            val richEpisodesProccesor = MultiCallProccesor(seasonCalls)
+            richEpisodesProccesor.enqueue { richEpisodes ->
+                richEpisodes.forEach { richEpisode ->
+                    richEpisode.season!!.episodes.find { LocalDate.parse(it.airDate).compareTo(today) >= 0 }.let {
+                        richEpisode.episode = it
+                    }
                 }
+                val seasonsWithUpdates = richEpisodes.filter { it.episode != null }
                 callback(seasonsWithUpdates)
             }
         }
