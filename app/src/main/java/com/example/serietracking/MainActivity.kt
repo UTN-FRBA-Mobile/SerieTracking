@@ -63,14 +63,7 @@ class MainActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_home -> {
-                AccountService.getFavoriteNextCaps { richEpisodes ->
-                    val fragment = NextEpisodesFragment()
-                    val args = Bundle()
-                    args.putSerializable("episodes", richEpisodes as java.io.Serializable)
-                    fragment.arguments = args
-
-                    openFragment(fragment)
-                }
+                openHome()
                 //message.setText(R.string.title_notifications)
                 //val intent = Intent(this, DetailsTvShowFragment::class.java)
                 //startActivity(intent)
@@ -79,6 +72,17 @@ class MainActivity : AppCompatActivity() {
             }
         }
         false
+    }
+
+    private fun openHome() {
+        AccountService.getFavoriteNextCaps { richEpisodes ->
+            val fragment = NextEpisodesFragment()
+            val args = Bundle()
+            args.putSerializable("episodes", richEpisodes as java.io.Serializable)
+            fragment.arguments = args
+
+            openFragment(fragment)
+        }
     }
 
     private fun openFragment(fragment: Fragment) {
@@ -93,5 +97,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
+        openHome()
     }
 }
