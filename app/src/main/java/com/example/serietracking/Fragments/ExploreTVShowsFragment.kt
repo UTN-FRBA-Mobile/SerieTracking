@@ -1,5 +1,6 @@
 package com.example.serietracking.Fragments
 
+import android.accounts.Account
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,9 +12,13 @@ import com.example.serietracking.Adapters.ExploreRecyclerAdapter
 import com.example.serietracking.Adapters.TvShowListener
 import com.example.serietracking.TVModel
 import com.example.serietracking.TVShow
-import com.example.serietracking.network.ApiClient
-import com.example.serietracking.network.ApiInterface
+import com.example.serietracking.account.AccountService
+import com.example.serietracking.login.dto.CreateSessionRequest
+import com.example.serietracking.login.dto.CreateSessionResponse
+import com.example.serietracking.network.*
 import kotlinx.android.synthetic.main.fragment_explore_tvshows.*
+import retrofit2.Call
+import retrofit2.Response
 import java.text.FieldPosition
 
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,8 +39,13 @@ class ExploreTVShowsFragment : Fragment() {
         val tvShows: List<TVShow> = tvs.results
         adapter = ExploreRecyclerAdapter(tvShows, object : TvShowListener {
             override fun onTvShowSelected(tvShow: TVShow, position: Int) {
-                //TODO: Agregar a favoritos
-//                ApiClient.apiInterface.
+                val callback = object: ErrorLoggingCallback<AddToFavoriteResponse>() {
+                    override fun onResponse(call: Call<AddToFavoriteResponse>, response: Response<AddToFavoriteResponse>) {
+                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    }
+                }
+
+                AccountService.addToFavorite("tv", media_id = tvShow.id, favorite = true, callback = callback)
                 Log.d("asd", "tv show selected")
             }
         })

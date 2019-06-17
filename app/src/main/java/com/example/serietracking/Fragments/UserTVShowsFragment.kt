@@ -6,13 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.serietracking.Adapters.UserRecyclerAdapter
-import com.example.serietracking.R
 import com.example.serietracking.TVModel
 import com.example.serietracking.TVShow
-import com.example.serietracking.account.AccountService
-import com.example.serietracking.network.ErrorLoggingCallback
 import kotlinx.android.synthetic.main.fragment_user_tvshows.*
 
 

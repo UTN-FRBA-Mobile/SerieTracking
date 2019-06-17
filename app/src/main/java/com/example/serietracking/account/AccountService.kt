@@ -6,6 +6,8 @@ import com.example.serietracking.SeasonModel
 import com.example.serietracking.TVModel
 import com.example.serietracking.account.dto.AccountResponse
 import com.example.serietracking.multicall.Callable
+import com.example.serietracking.network.AddToFavoriteRequest
+import com.example.serietracking.network.AddToFavoriteResponse
 import com.example.serietracking.network.ApiClient
 import com.example.serietracking.network.ErrorLoggingCallback
 import com.example.serietracking.network.HttpConstants.API_KEY
@@ -15,18 +17,28 @@ import java.time.LocalDate
 
 object AccountService {
     private var sessionId: String? = null
+    private var accountID: Long? = null
 
     fun setSessionId(sessionId: String) {
         this.sessionId = sessionId
     }
 
+
     fun getFavorite(callback: ErrorLoggingCallback<TVModel>) {
+        //TODO: Esto se tiene que hacer por separado, agregar el account desde el principio
         ApiClient.apiInterface.getAccount(API_KEY, sessionId!!).enqueue(object: ErrorLoggingCallback<AccountResponse>() {
             override fun onResponse(call: Call<AccountResponse>, response: Response<AccountResponse>) {
-                ApiClient.apiInterface.getFavorite(response.body().id, API_KEY, sessionId!!).enqueue(callback)
+//                this.accountID = response.body().id
+                accountID = response.body().id
+                ApiClient.apiInterface.getFavorite(accountID!! , API_KEY, sessionId!!).enqueue(callback)
             }
         })
     }
+
+    fun addToFavorite(media_type: String, media_id: Long, favorite: Boolean, callback: ErrorLoggingCallback<AddToFavoriteResponse>) {
+        ApiClient.apiInterface.addFavorite(accountID!!, API_KEY, sessionId!!, AddToFavoriteRequest(media_type, media_id, favorite)).enqueue(callback)
+    }
+
 
     fun getFavoriteNextCaps(callback: (List<RichEpisode>) -> Unit) {
         this.getFavorite(object: ErrorLoggingCallback<TVModel>() {
