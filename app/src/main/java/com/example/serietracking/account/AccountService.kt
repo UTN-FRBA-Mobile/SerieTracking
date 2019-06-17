@@ -2,7 +2,6 @@ package com.example.serietracking.account
 
 import com.example.serietracking.RichEpisode
 import com.example.serietracking.multicall.MultiCallProccesor
-import com.example.serietracking.SeasonModel
 import com.example.serietracking.TVModel
 import com.example.serietracking.account.dto.AccountResponse
 import com.example.serietracking.multicall.Callable
@@ -35,8 +34,8 @@ object AccountService {
         })
     }
 
-    fun addToFavorite(media_type: String, media_id: Long, favorite: Boolean, callback: ErrorLoggingCallback<AddToFavoriteResponse>) {
-        ApiClient.apiInterface.addFavorite(accountID!!, API_KEY, sessionId!!, AddToFavoriteRequest(media_type, media_id, favorite)).enqueue(callback)
+    fun addToFavorite(mediaType: String, mediaId: Long, favorite: Boolean, callback: ErrorLoggingCallback<AddToFavoriteResponse>) {
+        ApiClient.apiInterface.addFavorite(accountID!!, API_KEY, sessionId!!, AddToFavoriteRequest(mediaType, mediaId, favorite)).enqueue(callback)
     }
 
 

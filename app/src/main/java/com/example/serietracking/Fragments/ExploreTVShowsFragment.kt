@@ -41,11 +41,12 @@ class ExploreTVShowsFragment : Fragment() {
             override fun onTvShowSelected(tvShow: TVShow, position: Int) {
                 val callback = object: ErrorLoggingCallback<AddToFavoriteResponse>() {
                     override fun onResponse(call: Call<AddToFavoriteResponse>, response: Response<AddToFavoriteResponse>) {
-                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                        Log.i("Favorite", "favorite add response")
                     }
                 }
 
-                AccountService.addToFavorite("tv", media_id = tvShow.id, favorite = true, callback = callback)
+                AccountService.addToFavorite("tv", tvShow.id, true, callback)
                 Log.d("asd", "tv show selected")
             }
         })
