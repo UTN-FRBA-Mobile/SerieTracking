@@ -1,6 +1,5 @@
 package com.example.serietracking.Fragments
 
-import android.accounts.Account
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,13 +12,11 @@ import com.example.serietracking.Adapters.TvShowListener
 import com.example.serietracking.TVModel
 import com.example.serietracking.TVShow
 import com.example.serietracking.account.AccountService
-import com.example.serietracking.login.dto.CreateSessionRequest
-import com.example.serietracking.login.dto.CreateSessionResponse
-import com.example.serietracking.network.*
+import com.example.serietracking.network.AddToFavoriteResponse
+import com.example.serietracking.network.ErrorLoggingCallback
 import kotlinx.android.synthetic.main.fragment_explore_tvshows.*
 import retrofit2.Call
 import retrofit2.Response
-import java.text.FieldPosition
 
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 class ExploreTVShowsFragment : Fragment() {
