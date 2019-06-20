@@ -43,20 +43,33 @@ class MainActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_dashboard -> {
-                val callback = object: ErrorLoggingCallback<TVModel>() {
+                val callbackFavorites = object: ErrorLoggingCallback<TVModel>() {
                     override fun onResponse(call: Call<TVModel>?, response: Response<TVModel>?) {
                         if (response!!.isSuccessful) {
-                            val tvs = response.body()
+                            val favoritesTvs = response.body()
                             val fragment = ExploreTVShowsFragment()
                             val args = Bundle()
-                            args.putSerializable("tvs", tvs)
-                            fragment.arguments = args
+                            args.putSerializable("favoritesTvs", favoritesTvs)
 
-                            openFragment(fragment)
+                            val callbackTV = object: ErrorLoggingCallback<TVModel>() {
+                                override fun onResponse(call: Call<TVModel>?, response: Response<TVModel>?) {
+                                    if (response!!.isSuccessful) {
+                                        val exploreTvs = response.body()
+                                        args.putSerializable("exploreTvs", exploreTvs)
+                                        fragment.arguments = args
+
+                                        openFragment(fragment)
+                                    }
+                                }
+                            }
+                            ApiClient.apiInterface.getPopular(HttpConstants.API_KEY).enqueue(callbackTV)
+
+
                         }
                     }
                 }
-                ApiClient.apiInterface.getPopular(HttpConstants.API_KEY).enqueue(callback)
+                AccountService.getFavorite(callbackFavorites)
+
 
                 return@OnNavigationItemSelectedListener true
             }

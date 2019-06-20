@@ -31,11 +31,19 @@ class ExploreTVShowsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val args = arguments!!
-        val tvs: TVModel = args.getSerializable("tvs") as TVModel
+        val exploreTvs: TVModel = args.getSerializable("exploreTvs") as TVModel
+        val favoritesTvs: TVModel = args.getSerializable("favoritesTvs") as TVModel
 
-        val tvShows: List<TVShow> = tvs.results
-        adapter = ExploreRecyclerAdapter(tvShows, object : TvShowListener {
-            override fun onTvShowSelected(tvShow: TVShow, position: Int) {
+        var favoritesId = mutableListOf<Long>()
+        fun saveFavoritesId() {
+            for (favorite in favoritesTvs.results) {
+                favoritesId.add(favorite.id)
+            }
+        }
+
+        val tvShows: List<TVShow> = exploreTvs.results
+        adapter = ExploreRecyclerAdapter(tvShows, favoritesId ,object : TvShowListener {
+            override fun onTvShowSelected(tvShow: TVShow, isInFavorite: Boolean) {
                 val callback = object: ErrorLoggingCallback<AddToFavoriteResponse>() {
                     override fun onResponse(call: Call<AddToFavoriteResponse>, response: Response<AddToFavoriteResponse>) {
                         //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -43,7 +51,7 @@ class ExploreTVShowsFragment : Fragment() {
                     }
                 }
 
-                AccountService.addToFavorite("tv", tvShow.id, true, callback)
+                AccountService.addToFavorite("tv", tvShow.id, !isInFavorite, callback)
                 Log.d("asd", "tv show selected")
             }
         })

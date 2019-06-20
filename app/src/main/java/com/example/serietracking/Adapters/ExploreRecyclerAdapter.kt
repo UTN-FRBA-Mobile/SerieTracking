@@ -14,11 +14,12 @@ import kotlinx.android.synthetic.main.tvshow_item.view.*
 import java.util.logging.Logger
 
 class ExploreRecyclerAdapter(private val tvShows: List<TVShow>,
-    private val listener: TvShowListener
+                             private val favoritesId: MutableList<Long>,
+        private val listener: TvShowListener
 ) : RecyclerView.Adapter<ExploreRecyclerAdapter.TVHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TVHolder {
         val inflatedView = parent.inflate(R.layout.explore_tvshow_item, false)
-        return TVHolder(inflatedView)
+        return TVHolder(inflatedView, favoritesId)
     }
 
     override fun getItemCount() = tvShows.size
@@ -28,10 +29,10 @@ class ExploreRecyclerAdapter(private val tvShows: List<TVShow>,
         holder.bindTVShow(itemTVShow, listener)
     }
 
-    class TVHolder(v: View) : RecyclerView.ViewHolder(v), View.OnClickListener {
+    class TVHolder(v: View, favoritesId: MutableList<Long>) : RecyclerView.ViewHolder(v), View.OnClickListener {
         private var view: View = v
         private var tvShow: TVShow? = null
-
+        private var favoritesId: MutableList<Long> = favoritesId
 
         //4
         //TODO: El click de la celda
@@ -42,13 +43,16 @@ class ExploreRecyclerAdapter(private val tvShows: List<TVShow>,
         fun bindTVShow(tvShow: TVShow, listener: TvShowListener) {
             this.tvShow = tvShow
             Picasso.with(view.context).load("https://image.tmdb.org/t/p/w500" + tvShow.posterPath).into(view.itemImage)
-//            Glide.with(view.context).load("https://image.tmdb.org/t/p/w500/" + tvShow.posterPath).into(view.itemImage)
 
             view.itemTitle.text = tvShow.name
             view.itemDescription.text = tvShow.overview
+            view.addButton.text = "AGREGAR SERIE A FAVORITOS"
+            if (tvShowIsInFavoriteList(tvShow)) {
+                view.addButton.text = "REMOVER SERIE DE MIS FAVORITOS"
+            }
 
             view.addButton.setOnClickListener {
-                listener.onTvShowSelected(tvShow, adapterPosition)
+                listener.onTvShowSelected(tvShow, tvShowIsInFavoriteList(tvShow))
             }
         }
 
@@ -58,15 +62,14 @@ class ExploreRecyclerAdapter(private val tvShows: List<TVShow>,
             private val PHOTO_KEY = "PHOTO"
         }
 
-        fun addTvShowToFavorite() {
-            print("Toco")
-            //TODO: Agregar la query posta
-//        ApiClient.apiInterface.addTVSerie
+        //TODO: Pasarlo a una clase afuera asi no hay tanto pasamanos?
+        fun tvShowIsInFavoriteList(tvShow: TVShow): Boolean {
+            return favoritesId.contains(tvShow.id)
         }
 
     }
 }
 
 interface TvShowListener {
-    fun onTvShowSelected(tvShow: TVShow, position: Int)
+    fun onTvShowSelected(tvShow: TVShow, isInFavorite: Boolean)
 }
