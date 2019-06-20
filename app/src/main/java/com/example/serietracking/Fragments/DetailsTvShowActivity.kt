@@ -1,25 +1,19 @@
 package com.example.serietracking.Fragments
 
-import android.content.Context
 import android.os.Bundle
-import android.util.AttributeSet
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.serietracking.*
 import com.example.serietracking.Adapters.ListAdapter
 import com.example.serietracking.network.ApiClient
 import com.example.serietracking.network.ErrorLoggingCallback
 import com.example.serietracking.network.HttpConstants
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_details_tvshow.*
 import retrofit2.Call
 import retrofit2.Response
-import com.example.serietracking.*
-import com.example.serietracking.multicall.Callable
-import com.example.serietracking.multicall.MultiCallProccesor
-import kotlinx.android.synthetic.main.activity_main.*
-import java.time.LocalDate
 
 
 class DetailsTvShowActivity : AppCompatActivity() {
@@ -102,7 +96,7 @@ class DetailsTvShowActivity : AppCompatActivity() {
     }
 
 
-    var seasons: List<SeasonModel>
+//    var seasons: List<SeasonModel>
     private fun getSeriesAndEpisodes() {
         val callback = object: ErrorLoggingCallback<TVCompleteModel>() {
             override fun onResponse(call: Call<TVCompleteModel>?, response: Response<TVCompleteModel>?) {
