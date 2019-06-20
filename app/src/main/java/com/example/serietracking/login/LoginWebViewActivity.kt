@@ -48,9 +48,12 @@ class LoginWebViewActivity : AppCompatActivity() {
                                 ).enqueue(object: ErrorLoggingCallback<CreateSessionResponse>() {
                                     override fun onResponse(call: Call<CreateSessionResponse>, response: Response<CreateSessionResponse>) {
                                         response.body().let { createSessionResponse ->
-                                            AccountService.setSessionId(createSessionResponse.sessionId)
-                                            val intent = Intent(this@LoginWebViewActivity, MainActivity::class.java)
-                                            startActivity(intent)
+                                            if(createSessionResponse!=null){
+                                                AccountService.setSessionId(createSessionResponse.sessionId)
+                                                val intent = Intent(this@LoginWebViewActivity, MainActivity::class.java)
+                                                startActivity(intent)
+                                            }
+
                                         }
                                     }
                                 })
