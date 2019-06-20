@@ -51,14 +51,14 @@ class DetailsTvShowActivity : AppCompatActivity() {
                         if (capVistos.contains(episode.id.toString())) capitulo.seen = true;
                         capitulos.add(capitulo)
                     }
-                    adapter = ListAdapter(capitulos)
+                    adapter = ListAdapter(capitulos, tvShow)
                     detailsRecyclerView.adapter = adapter
                 }
             }
         }
         initSwipe()
-        getSeriesAndEpisodes()
-//        ApiClient.apiInterface.getSeasonOfGOT(HttpConstants.API_KEY).enqueue(callback)
+//        getSeriesAndEpisodes()
+        ApiClient.apiInterface.getSeasonOfGOT(HttpConstants.API_KEY).enqueue(callback)
     }
 
     private fun initSwipe() {
@@ -92,7 +92,7 @@ class DetailsTvShowActivity : AppCompatActivity() {
         }
 
         val itemTouchHelper = ItemTouchHelper(simpleItemTouchCallback)
-        itemTouchHelper.attachToRecyclerView(list_recycler_view)
+        itemTouchHelper.attachToRecyclerView(detailsRecyclerView)
     }
 
 
