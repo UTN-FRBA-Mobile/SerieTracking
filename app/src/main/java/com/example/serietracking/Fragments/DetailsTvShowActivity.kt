@@ -57,8 +57,8 @@ class DetailsTvShowActivity : AppCompatActivity() {
             }
         }
         initSwipe()
-        getSeriesAndEpisodes()
-//        ApiClient.apiInterface.getSeasonOfGOT(HttpConstants.API_KEY).enqueue(callback)
+//        getSeriesAndEpisodes()
+        ApiClient.apiInterface.getSeasonOfGOT(HttpConstants.API_KEY).enqueue(callback)
     }
 
     private fun initSwipe() {
