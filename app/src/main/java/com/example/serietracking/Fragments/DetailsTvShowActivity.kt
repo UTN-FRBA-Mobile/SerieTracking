@@ -16,7 +16,10 @@ import kotlinx.android.synthetic.main.fragment_details_tvshow.*
 import retrofit2.Call
 import retrofit2.Response
 import com.example.serietracking.*
+import com.example.serietracking.multicall.Callable
+import com.example.serietracking.multicall.MultiCallProccesor
 import kotlinx.android.synthetic.main.activity_main.*
+import java.time.LocalDate
 
 
 class DetailsTvShowActivity : AppCompatActivity() {
@@ -24,7 +27,7 @@ class DetailsTvShowActivity : AppCompatActivity() {
 
     private lateinit var adapter: ListAdapter
     private val capitulos = mutableListOf<Capitulo>()
-    private val tvShow:TVShow?
+    private var tvShow:TVShow? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_details_tvshow)
@@ -60,7 +63,8 @@ class DetailsTvShowActivity : AppCompatActivity() {
             }
         }
         initSwipe()
-        ApiClient.apiInterface.getSeasonOfGOT(HttpConstants.API_KEY).enqueue(callback)
+        getSeriesAndEpisodes()
+//        ApiClient.apiInterface.getSeasonOfGOT(HttpConstants.API_KEY).enqueue(callback)
     }
 
     private fun initSwipe() {
@@ -97,5 +101,33 @@ class DetailsTvShowActivity : AppCompatActivity() {
         itemTouchHelper.attachToRecyclerView(list_recycler_view)
     }
 
-//    private fun
+
+    var seasons: List<SeasonModel>
+    private fun getSeriesAndEpisodes() {
+        val callback = object: ErrorLoggingCallback<TVCompleteModel>() {
+            override fun onResponse(call: Call<TVCompleteModel>?, response: Response<TVCompleteModel>?) {
+                if (response!!.isSuccessful) {
+                    val tvCompleteModelSeason = response.body()
+                    val _seasons:List<TVCompleteSeasonModel> = tvCompleteModelSeason.seasons
+
+
+//                    val callback2 = object : ErrorLoggingCallback<SeasonModel>() {
+//                        override fun onResponse(call: Call<SeasonModel>?, response: Response<SeasonModel>?) {
+//                            if (response!!.isSuccessful) {
+//
+//                            }
+//                        }
+//                    }
+//
+//                    for (season in _seasons) {
+//                        ApiClient.apiInterface.getSeason(tvShow!!.id, season.seasonNumber, HttpConstants.API_KEY).enqueue(callback2)
+//                    }
+
+                }
+            }
+        }
+
+        ApiClient.apiInterface.getTV(tvShow!!.id, HttpConstants.API_KEY).enqueue(callback)
+
+    }
 }
