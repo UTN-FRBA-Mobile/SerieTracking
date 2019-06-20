@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools" android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+    <RelativeLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+        <ImageView  android:id="@+id/itemImage"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_margin="10dp"/>
+
+        <TextView android:id="@+id/itemTitle"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_toEndOf="@id/itemImage"
+                  android:layout_alignTop="@id/itemImage"
+                  android:layout_toRightOf="@id/itemImage"
+                  android:layout_marginLeft="10dp"
+                  android:text="Título de prueba"
+                  android:textSize="20sp"
+                  android:textStyle="bold"
+        />
+
+        <TextView android:id="@+id/itemDescription"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_toEndOf="@id/itemImage"
+                  android:layout_below="@id/itemTitle"
+                  android:layout_toRightOf="@id/itemImage"
+                  android:layout_alignParentEnd="true"
+                  android:layout_alignParentRight="true"
+                  android:layout_margin="10dp"
+                  android:textSize="15sp"
+                  android:text="Esta es una descripcion  descripcion de prueba d descripcion de pruebaescripcion de pruebad descripcion de prueba  descripcion de pruebae prueba de como puede llegar a ser una serie y de eso depende de todo el desarrollo de la misma."
+        />
+    </RelativeLayout>
+</LinearLayout>

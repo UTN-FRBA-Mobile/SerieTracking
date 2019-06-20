@@ -37,7 +37,7 @@ class NextEpisodesFragment : Fragment() {
             )
         }
 
-        adapter = ListAdapter(capitulos)
+        adapter = ListAdapter(capitulos, null)
         detailsRecyclerView.adapter = adapter
 
         linearLayoutManager = LinearLayoutManager(view.context)

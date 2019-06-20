@@ -24,7 +24,7 @@ class DetailsTvShowActivity : AppCompatActivity() {
 
     private lateinit var adapter: ListAdapter
     private val capitulos = mutableListOf<Capitulo>()
-    private val tvShow:TVShow?
+    private var tvShow:TVShow? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_details_tvshow)
@@ -54,7 +54,7 @@ class DetailsTvShowActivity : AppCompatActivity() {
                         if (capVistos.contains(episode.id.toString())) capitulo.seen = true;
                         capitulos.add(capitulo)
                     }
-                    adapter = ListAdapter(capitulos)
+                    adapter = ListAdapter(capitulos, tvShow)
                     detailsRecyclerView.adapter = adapter
                 }
             }
@@ -94,7 +94,7 @@ class DetailsTvShowActivity : AppCompatActivity() {
         }
 
         val itemTouchHelper = ItemTouchHelper(simpleItemTouchCallback)
-        itemTouchHelper.attachToRecyclerView(list_recycler_view)
+        itemTouchHelper.attachToRecyclerView(detailsRecyclerView)
     }
 
 //    private fun
