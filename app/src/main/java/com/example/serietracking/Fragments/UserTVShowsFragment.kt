@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.serietracking.Adapters.UserRecyclerAdapter
-import com.example.serietracking.Adapters.UserTvShowListener
 import com.example.serietracking.TVModel
 import com.example.serietracking.TVShow
 import kotlinx.android.synthetic.main.fragment_user_tvshows.*
@@ -34,12 +33,7 @@ class UserTVShowsFragment : Fragment() {
         val tvs: TVModel = args.getSerializable("tvs") as TVModel
 
         val tvShows: List<TVShow> = tvs.results
-        adapter = UserRecyclerAdapter(tvShows, object :UserTvShowListener {
-            override fun onTvShowUserSelected(tvShow: TVShow) {
-                val intent = Intent(getActivity(), DetailsTvShowActivity::class.java)
-                getActivity()!!.startActivity(intent)
-            }
-        })
+        adapter = UserRecyclerAdapter(tvShows)
         userRecyclerView.adapter = adapter
 
         linearLayoutManager = LinearLayoutManager(view.context)

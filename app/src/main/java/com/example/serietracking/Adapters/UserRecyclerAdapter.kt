@@ -1,6 +1,6 @@
 package com.example.serietracking.Adapters
 
-import android.util.Log
+import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -9,10 +9,11 @@ import com.example.serietracking.TVShow
 import com.example.serietracking.inflate
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.tvshow_item.view.*
+import android.content.Intent
+import com.example.serietracking.Fragments.DetailsTvShowActivity
 
 
-class UserRecyclerAdapter(private val tvShows: List<TVShow>,
-private val listener: UserTvShowListener): RecyclerView.Adapter<UserRecyclerAdapter.TVUserHolder>() {
+class UserRecyclerAdapter(private val tvShows: List<TVShow>): RecyclerView.Adapter<UserRecyclerAdapter.TVUserHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TVUserHolder {
         val inflatedView = parent.inflate(R.layout.tvshow_item, false)
         return TVUserHolder(inflatedView)
@@ -22,7 +23,7 @@ private val listener: UserTvShowListener): RecyclerView.Adapter<UserRecyclerAdap
 
     override fun onBindViewHolder(holder: TVUserHolder, position: Int) {
         val itemTVShow = tvShows[position]
-        holder.bindTVShow(itemTVShow, listener)
+        holder.bindTVShow(itemTVShow)
     }
 
     class TVUserHolder(v: View): RecyclerView.ViewHolder(v), View.OnClickListener {
@@ -30,17 +31,20 @@ private val listener: UserTvShowListener): RecyclerView.Adapter<UserRecyclerAdap
         private var tvShow: TVShow? = null
 
         override fun onClick(v: View) {
-
+//                getActivity()!!.startActivity(intent)
         }
 
-        fun bindTVShow(tvShow: TVShow, listener: UserTvShowListener) {
+        fun bindTVShow(tvShow: TVShow) {
             this.tvShow = tvShow
             Picasso.with(view.context).load("https://image.tmdb.org/t/p/w500" + tvShow.posterPath).into(view.itemImage)
             view.itemTitle.text = tvShow.name
             view.itemDescription.text = tvShow.overview
 
             view.setOnClickListener {
-                listener.onTvShowUserSelected(tvShow)
+                val context = itemView.context
+                val intent = Intent(context.applicationContext, DetailsTvShowActivity::class.java)
+                intent.putExtra("tvShow", tvShow)
+                context.startActivity(intent)
             }
         }
 
@@ -51,8 +55,4 @@ private val listener: UserTvShowListener): RecyclerView.Adapter<UserRecyclerAdap
         }
 
     }
-}
-
-interface UserTvShowListener {
-    fun onTvShowUserSelected(tvShow: TVShow)
 }

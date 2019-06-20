@@ -24,6 +24,7 @@ class DetailsTvShowActivity : AppCompatActivity() {
 
     private lateinit var adapter: ListAdapter
     private val capitulos = mutableListOf<Capitulo>()
+    val tvShow:TVShow = intent.extras.getSerializable("tvShow") as TVShow
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
