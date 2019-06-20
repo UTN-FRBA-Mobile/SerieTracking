@@ -36,6 +36,7 @@ class UserTVShowsFragment : Fragment() {
         adapter = UserRecyclerAdapter(tvShows, object :UserTvShowListener {
             override fun onTvShowUserSelected(tvShow: TVShow) {
                 val intent = Intent(getActivity(), DetailsTvShowActivity::class.java)
+                intent.putExtra("tvShow", tvShow)
                 getActivity()!!.startActivity(intent)
             }
         })
