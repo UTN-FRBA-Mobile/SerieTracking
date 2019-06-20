@@ -45,11 +45,4 @@ class UserTVShowsFragment : Fragment() {
         linearLayoutManager = LinearLayoutManager(view.context)
         userRecyclerView.layoutManager = linearLayoutManager
     }
-
-    fun algo() {
-        val intent = Intent(getActivity(), DetailsTvShowActivity::class.java)
-//            startActivity(intent)
-//            intent.startA
-        getActivity()!!.startActivity(intent)
-    }
 }
