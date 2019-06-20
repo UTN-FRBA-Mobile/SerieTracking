@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.serietracking.*
 import com.example.serietracking.Adapters.ListAdapter
+import com.example.serietracking.Adapters.headerViewHolder
 import com.example.serietracking.network.ApiClient
 import com.example.serietracking.network.ErrorLoggingCallback
 import com.example.serietracking.network.HttpConstants
@@ -68,6 +69,9 @@ class DetailsTvShowActivity : AppCompatActivity() {
                 return false
             }
 
+            override fun getSwipeDirs(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
+                return if (viewHolder is headerViewHolder) 0 else super.getSwipeDirs(recyclerView, viewHolder)
+            }
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
 
@@ -76,12 +80,12 @@ class DetailsTvShowActivity : AppCompatActivity() {
                 val capVistos = prefs!!.getStringSet("capVistos",HashSet<String>())
 
                 if (direction == ItemTouchHelper.LEFT) {
-                    capitulos[position].seen = true;
-                    capVistos.add(capitulos[position].id);
+                    capitulos[position-1].seen = true;
+                    capVistos.add(capitulos[position-1].id);
                     adapter.notifyDataSetChanged();
                 } else {
-                    capVistos.remove(capitulos[position].id);
-                    capitulos[position].seen = false;
+                    capVistos.remove(capitulos[position-1].id);
+                    capitulos[position-1].seen = false;
                     adapter.notifyDataSetChanged();
 
                 }
