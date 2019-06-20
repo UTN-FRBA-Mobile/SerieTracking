@@ -26,30 +26,12 @@ class ListAdapter(private val list: List<Capitulo>): RecyclerView.Adapter<MovieV
 }
 
 class MovieViewHolder(v: View) : RecyclerView.ViewHolder(v), View.OnClickListener {
-
-
-
     private var view: View = v
     private var episode: Capitulo? = null
-
-//
-//    private var mTitleView: TextView? = null
-//    private var mEpisodioView: TextView? = null
-//    private var mSerieView: TextView? = null
-//    private var mContenedor: LinearLayout? = null
 
     init {
         v.setOnClickListener(this)
     }
-
-//    init {
-//        mTitleView = itemView.findViewById(R.id.titleTextView)
-//        mEpisodioView = itemView.findViewById(R.id.episodeTextView)
-//        mSerieView = itemView.findViewById(R.id.numberOfEpisodeTextView)
-//        mContenedor = itemView.findViewById(R.id.contenedor)
-//    }
-
-
     override fun onClick(v: View?) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -61,5 +43,4 @@ class MovieViewHolder(v: View) : RecyclerView.ViewHolder(v), View.OnClickListene
         view.numberOfEpisodeTextView.text = episode.episodio
         view.contenedor.setBackgroundColor(if (episode.seen) Color.GREEN else Color.WHITE )
     }
-
 }

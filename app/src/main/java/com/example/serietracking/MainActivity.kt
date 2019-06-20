@@ -1,10 +1,8 @@
 package com.example.serietracking
 
-import android.content.Intent
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.serietracking.Fragments.DetailsTvShowFragment
 import com.example.serietracking.Fragments.ExploreTVShowsFragment
 import com.example.serietracking.Fragments.UserTVShowsFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -65,7 +63,7 @@ class MainActivity : AppCompatActivity() {
             R.id.navigation_home -> {
                 openHome()
                 //message.setText(R.string.title_notifications)
-                //val intent = Intent(this, DetailsTvShowFragment::class.java)
+                //val intent = Intent(this, DetailsTvShowActivity::class.java)
                 //startActivity(intent)
 
                 return@OnNavigationItemSelectedListener true

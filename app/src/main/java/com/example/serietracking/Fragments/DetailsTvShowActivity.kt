@@ -1,12 +1,13 @@
 package com.example.serietracking.Fragments
 
-import android.content.SharedPreferences
+import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.FragmentActivity
+import android.util.AttributeSet
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.serietracking.Adapters.ExploreRecyclerAdapter
 import com.example.serietracking.Adapters.ListAdapter
 import com.example.serietracking.network.ApiClient
 import com.example.serietracking.network.ErrorLoggingCallback
@@ -18,7 +19,7 @@ import com.example.serietracking.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class DetailsTvShowFragment : FragmentActivity() {
+class DetailsTvShowActivity : AppCompatActivity() {
     private lateinit var linearLayoutManager: LinearLayoutManager
 
     private lateinit var adapter: ListAdapter

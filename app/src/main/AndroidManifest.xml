@@ -30,6 +30,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+                android:name=".Fragments.DetailsTvShowActivity"
+                android:label="Detalle Serie">
+        </activity>
     </application>
 
 </manifest>

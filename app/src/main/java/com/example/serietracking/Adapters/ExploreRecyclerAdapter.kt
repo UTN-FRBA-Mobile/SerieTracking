@@ -13,8 +13,7 @@ import kotlinx.android.synthetic.main.explore_tvshow_item.view.*
 import kotlinx.android.synthetic.main.tvshow_item.view.*
 import java.util.logging.Logger
 
-class ExploreRecyclerAdapter(
-    private val tvShows: List<TVShow>,
+class ExploreRecyclerAdapter(private val tvShows: List<TVShow>,
     private val listener: TvShowListener
 ) : RecyclerView.Adapter<ExploreRecyclerAdapter.TVHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TVHolder {
@@ -38,7 +37,6 @@ class ExploreRecyclerAdapter(
         //TODO: El click de la celda
         override fun onClick(v: View) {
             Log.d("RecyclerView", "CLICK!")
-
         }
 
         fun bindTVShow(tvShow: TVShow, listener: TvShowListener) {
