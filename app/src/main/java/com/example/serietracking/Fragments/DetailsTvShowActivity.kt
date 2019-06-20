@@ -24,13 +24,13 @@ class DetailsTvShowActivity : AppCompatActivity() {
 
     private lateinit var adapter: ListAdapter
     private val capitulos = mutableListOf<Capitulo>()
-
+    private val tvShow:TVShow?
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_details_tvshow)
 
         val thisActivity = this
-        val tvShow:TVShow? = intent.extras.getSerializable("tvShow") as? TVShow
+        tvShow = intent.extras.getSerializable("tvShow") as? TVShow
 
         val callback = object : ErrorLoggingCallback<SeasonModel>() {
             override fun onResponse(call: Call<SeasonModel>?, response: Response<SeasonModel>?) {
@@ -96,4 +96,6 @@ class DetailsTvShowActivity : AppCompatActivity() {
         val itemTouchHelper = ItemTouchHelper(simpleItemTouchCallback)
         itemTouchHelper.attachToRecyclerView(list_recycler_view)
     }
+
+//    private fun
 }
