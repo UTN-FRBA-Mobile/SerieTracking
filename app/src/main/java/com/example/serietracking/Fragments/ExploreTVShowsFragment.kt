@@ -13,7 +13,9 @@ import com.example.serietracking.TVModel
 import com.example.serietracking.TVShow
 import com.example.serietracking.account.AccountService
 import com.example.serietracking.network.AddToFavoriteResponse
+import com.example.serietracking.network.ApiClient
 import com.example.serietracking.network.ErrorLoggingCallback
+import com.example.serietracking.network.HttpConstants
 import kotlinx.android.synthetic.main.fragment_explore_tvshows.*
 import retrofit2.Call
 import retrofit2.Response
@@ -34,13 +36,7 @@ class ExploreTVShowsFragment : Fragment() {
         val exploreTvs: TVModel = args.getSerializable("exploreTvs") as TVModel
         val favoritesTvs: TVModel = args.getSerializable("favoritesTvs") as TVModel
 
-        var favoritesId = mutableListOf<Long>()
-        fun saveFavoritesId() {
-            for (favorite in favoritesTvs.results) {
-                favoritesId.add(favorite.id)
-            }
-        }
-
+        var favoritesId = saveFavoritesId(favoritesTvs)
         val tvShows: List<TVShow> = exploreTvs.results
         adapter = ExploreRecyclerAdapter(tvShows, favoritesId ,object : TvShowListener {
             override fun onTvShowSelected(tvShow: TVShow, isInFavorite: Boolean) {
@@ -59,6 +55,14 @@ class ExploreTVShowsFragment : Fragment() {
 
         linearLayoutManager = LinearLayoutManager(view.context)
         exploreRecyclerView.layoutManager = linearLayoutManager
+    }
+
+    fun saveFavoritesId(favoritesTvs: TVModel): MutableList<Long> {
+        var favoritesId = mutableListOf<Long>()
+        for (favorite in favoritesTvs.results) {
+            favoritesId.add(favorite.id)
+        }
+        return favoritesId
     }
 }
 

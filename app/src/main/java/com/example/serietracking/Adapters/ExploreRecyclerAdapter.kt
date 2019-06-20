@@ -52,6 +52,14 @@ class ExploreRecyclerAdapter(private val tvShows: List<TVShow>,
             }
 
             view.addButton.setOnClickListener {
+
+                if (tvShowIsInFavoriteList(tvShow)) {
+                    view.addButton.text = "AGREGAR SERIE A FAVORITOS"
+                }
+                else {
+                    view.addButton.text = "REMOVER SERIE DE MIS FAVORITOS"
+
+                }
                 listener.onTvShowSelected(tvShow, tvShowIsInFavoriteList(tvShow))
             }
         }
@@ -66,7 +74,6 @@ class ExploreRecyclerAdapter(private val tvShows: List<TVShow>,
         fun tvShowIsInFavoriteList(tvShow: TVShow): Boolean {
             return favoritesId.contains(tvShow.id)
         }
-
     }
 }
 

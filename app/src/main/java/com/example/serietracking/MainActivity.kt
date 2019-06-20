@@ -63,8 +63,6 @@ class MainActivity : AppCompatActivity() {
                                 }
                             }
                             ApiClient.apiInterface.getPopular(HttpConstants.API_KEY).enqueue(callbackTV)
-
-
                         }
                     }
                 }
