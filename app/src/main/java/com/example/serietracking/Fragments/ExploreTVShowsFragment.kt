@@ -26,6 +26,9 @@ class ExploreTVShowsFragment : Fragment() {
 
     private lateinit var adapter: ExploreRecyclerAdapter
 
+    private lateinit var exploreTVShows: TVModel
+    private lateinit var favoritesTvs: TVModel
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(com.example.serietracking.R.layout.fragment_explore_tvshows, container, false)
     }
@@ -33,17 +36,26 @@ class ExploreTVShowsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val args = arguments!!
-        val exploreTvs: TVModel = args.getSerializable("exploreTvs") as TVModel
-        val favoritesTvs: TVModel = args.getSerializable("favoritesTvs") as TVModel
+        exploreTVShows = args.getSerializable("exploreTvs") as TVModel
+        favoritesTvs = args.getSerializable("favoritesTvs") as TVModel
 
-        var favoritesId = saveFavoritesId(favoritesTvs)
-        val tvShows: List<TVShow> = exploreTvs.results
-        adapter = ExploreRecyclerAdapter(tvShows, favoritesId ,object : TvShowListener {
+        setAdapter()
+    }
+
+    fun setAdapter() {
+        adapter = ExploreRecyclerAdapter(exploreTVShows.results, favoritesTvs.results ,object : TvShowListener {
             override fun onTvShowSelected(tvShow: TVShow, isInFavorite: Boolean) {
                 val callback = object: ErrorLoggingCallback<AddToFavoriteResponse>() {
                     override fun onResponse(call: Call<AddToFavoriteResponse>, response: Response<AddToFavoriteResponse>) {
-                        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                        Log.i("Favorite", "favorite add response")
+                        // TODO: Ver si tengo que sacar o meter el tvshow
+                        if (isInFavorite) {
+                            favoritesTvs.results.remove(tvShow)
+                        }
+                        else {
+                            favoritesTvs.results.add(tvShow)
+                        }
+
+                        activity!!.runOnUiThread { adapter.notifyDataSetChanged() }
                     }
                 }
 
@@ -53,17 +65,10 @@ class ExploreTVShowsFragment : Fragment() {
         })
         exploreRecyclerView.adapter = adapter
 
-        linearLayoutManager = LinearLayoutManager(view.context)
+        linearLayoutManager = LinearLayoutManager(activity!!)
         exploreRecyclerView.layoutManager = linearLayoutManager
     }
 
-    fun saveFavoritesId(favoritesTvs: TVModel): MutableList<Long> {
-        var favoritesId = mutableListOf<Long>()
-        for (favorite in favoritesTvs.results) {
-            favoritesId.add(favorite.id)
-        }
-        return favoritesId
-    }
 }
 
 

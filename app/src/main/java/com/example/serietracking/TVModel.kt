@@ -5,7 +5,7 @@ import java.io.Serializable
 data class TVModel(val page: Int,
                    val totalResults: Int,
                    val totalPages: Int,
-                   val results: List<TVShow>): Serializable
+                   val results: MutableList<TVShow>): Serializable
 
 data class TVShow(val posterPath: String,
                   val popularity: Double,
