@@ -10,7 +10,7 @@ import retrofit2.http.*
 
 interface ApiInterface {
     @GET("tv/popular")
-    fun getPopular(@Query("api_key") api_key: String): Call<TVModel>
+    fun getPopular(@Query("api_key") api_key: String, @Query("page") page: Long = 1): Call<TVModel>
 
     @GET("tv/1399/season/1")
     fun getSeasonOfGOT(@Query("api_key") api_key: String): Call<SeasonModel>

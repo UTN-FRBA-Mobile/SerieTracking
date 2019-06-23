@@ -5,17 +5,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.serietracking.R
-import com.example.serietracking.TVModel
 import com.example.serietracking.TVShow
 import com.example.serietracking.inflate
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.explore_tvshow_item.view.*
 import kotlinx.android.synthetic.main.tvshow_item.view.*
-import java.util.logging.Logger
 
 class ExploreRecyclerAdapter(private val tvShows: MutableList<TVShow>,
                              private val favorites: MutableList<TVShow>,
-        private val listener: TvShowListener
+        private val listener: TvShowListener, private  val scrollTo: Int = 0
 ) : RecyclerView.Adapter<ExploreRecyclerAdapter.TVHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TVHolder {
         val inflatedView = parent.inflate(R.layout.explore_tvshow_item, false)
@@ -27,8 +25,14 @@ class ExploreRecyclerAdapter(private val tvShows: MutableList<TVShow>,
     override fun onBindViewHolder(holder: TVHolder, position: Int) {
         val itemTVShow = tvShows[position]
         val isFavorite = favorites.count { it.id == itemTVShow.id } != 0
+        var getMore = tvShows.size - 1 == position
+        if (getMore) {
+            listener.getMorePages()
+        }
         holder.bindTVShow(itemTVShow, isFavorite, listener)
     }
+
+
 
     class TVHolder(v: View) : RecyclerView.ViewHolder(v), View.OnClickListener {
         private var view: View = v
@@ -55,8 +59,7 @@ class ExploreRecyclerAdapter(private val tvShows: MutableList<TVShow>,
                 listener.onTvShowSelected(tvShow, isFavorite)
             }
         }
-
-
+        
         companion object {
             //5
             private val PHOTO_KEY = "PHOTO"
@@ -66,4 +69,5 @@ class ExploreRecyclerAdapter(private val tvShows: MutableList<TVShow>,
 
 interface TvShowListener {
     fun onTvShowSelected(tvShow: TVShow, isInFavorite: Boolean)
+    fun getMorePages()
 }
