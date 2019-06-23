@@ -38,7 +38,9 @@
                   android:layout_alignParentRight="true"
                   android:layout_margin="10dp"
                   android:textSize="15sp"
-                  android:text="Esta es una descripcion  descripcion de prueba d descripcion de pruebaescripcion de pruebad descripcion de prueba  descripcion de pruebae prueba de como puede llegar a ser una serie y de eso depende de todo el desarrollo de la misma."
+                  android:maxLines="3"
+                  android:ellipsize="end"
+                  android:text="Esta es una descripcdfdsfg gsdfg ion  descripcion de prueba d descripcion de pruebaescripcion de pruebad descripcion de prueba  descripcion de pruebae prueba de como puede llegar a ser una serie y de eso depende de todo el desarrollo de la misma."
         />
     </RelativeLayout>
 
