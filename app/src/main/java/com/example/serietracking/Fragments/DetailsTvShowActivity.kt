@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.serietracking.*
 import com.example.serietracking.Adapters.ListAdapter
 import com.example.serietracking.Adapters.headerViewHolder
+import com.example.serietracking.multicall.Callable
+import com.example.serietracking.multicall.MultiCallProccesor
 import com.example.serietracking.network.ApiClient
 import com.example.serietracking.network.ErrorLoggingCallback
 import com.example.serietracking.network.HttpConstants
@@ -30,36 +32,32 @@ class DetailsTvShowActivity : AppCompatActivity() {
         val thisActivity = this
         tvShow = intent.extras.getSerializable("tvShow") as? TVShow
 
-        val callback = object : ErrorLoggingCallback<SeasonModel>() {
-            override fun onResponse(call: Call<SeasonModel>?, response: Response<SeasonModel>?) {
-                if (response!!.isSuccessful) {
-
-                    linearLayoutManager = LinearLayoutManager(thisActivity)
-                    detailsRecyclerView.layoutManager = linearLayoutManager
-
-//                    val myPrefs = getSharedPreferences("myPrefs", Context.MODE_WORLD_READABLE)
-
-                    var prefs = getSharedPreferences("preferencias", 0)
-                    val capVistos = prefs!!.getStringSet("capVistos", HashSet<String>())
-
-                    for (episode in response.body().episodes) {
-                        var capitulo = Capitulo(
-                            episode.id.toString(),
-                            episode.name.toString(),
-                            "",
-                            episode.episodeNumber.toString()
-                        );
-                        if (capVistos.contains(episode.id.toString())) capitulo.seen = true;
-                        capitulos.add(capitulo)
-                    }
-                    adapter = ListAdapter(capitulos, tvShow)
-                    detailsRecyclerView.adapter = adapter
-                }
-            }
-        }
         initSwipe()
-//        getSeriesAndEpisodes()
-        ApiClient.apiInterface.getSeasonOfGOT(HttpConstants.API_KEY).enqueue(callback)
+        getSeasons { listSeasonModel ->
+            linearLayoutManager = LinearLayoutManager(thisActivity)
+            detailsRecyclerView.layoutManager = linearLayoutManager
+
+//          val myPrefs = getSharedPreferences("myPrefs", Context.MODE_WORLD_READABLE)
+
+            var prefs = getSharedPreferences("preferencias", 0)
+            val capVistos = prefs!!.getStringSet("capVistos", HashSet<String>())
+
+            //TODO: Cada uno de los [] dentro de listSeasonModel es una temporada
+            for (episode in listSeasonModel[0].episodes) {
+                var capitulo = Capitulo(
+                    episode.id.toString(),
+                    episode.name.toString(),
+                    "",
+                    episode.episodeNumber.toString()
+                )
+                if (capVistos.contains(episode.id.toString())) capitulo.seen = true;
+                capitulos.add(capitulo)
+            }
+            adapter = ListAdapter(capitulos, tvShow)
+            detailsRecyclerView.adapter = adapter
+            print("llego")
+
+        }
     }
 
     private fun initSwipe() {
@@ -99,33 +97,17 @@ class DetailsTvShowActivity : AppCompatActivity() {
         itemTouchHelper.attachToRecyclerView(detailsRecyclerView)
     }
 
-
-//    var seasons: List<SeasonModel>
-    private fun getSeriesAndEpisodes() {
-        val callback = object: ErrorLoggingCallback<TVCompleteModel>() {
-            override fun onResponse(call: Call<TVCompleteModel>?, response: Response<TVCompleteModel>?) {
-                if (response!!.isSuccessful) {
-                    val tvCompleteModelSeason = response.body()
-                    val _seasons:List<TVCompleteSeasonModel> = tvCompleteModelSeason.seasons
-
-
-//                    val callback2 = object : ErrorLoggingCallback<SeasonModel>() {
-//                        override fun onResponse(call: Call<SeasonModel>?, response: Response<SeasonModel>?) {
-//                            if (response!!.isSuccessful) {
-//
-//                            }
-//                        }
-//                    }
-//
-//                    for (season in _seasons) {
-//                        ApiClient.apiInterface.getSeason(tvShow!!.id, season.seasonNumber, HttpConstants.API_KEY).enqueue(callback2)
-//                    }
-
+    fun getSeasons(callback: (List<SeasonModel>) -> Unit) {
+        ApiClient.apiInterface.getTV(tvShow!!.id, HttpConstants.API_KEY).enqueue(object: ErrorLoggingCallback<TVCompleteModel>() {
+            override fun onResponse(call: Call<TVCompleteModel>, response: Response<TVCompleteModel>) {
+                val tvComplete = response.body()!!
+                val seasonCalls = tvComplete.seasons.map {
+                    Callable(ApiClient.apiInterface.getSeason(tvComplete.id, it.seasonNumber, HttpConstants.API_KEY), { s -> return@Callable s })
                 }
+                MultiCallProccesor(seasonCalls).enqueue(callback)
             }
-        }
-
-        ApiClient.apiInterface.getTV(tvShow!!.id, HttpConstants.API_KEY).enqueue(callback)
+        })
+    }
 
     }
 }
