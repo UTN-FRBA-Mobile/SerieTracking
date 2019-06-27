@@ -47,8 +47,9 @@ class DetailsTvShowActivity : AppCompatActivity() {
                 var capitulo = Capitulo(
                     episode.id.toString(),
                     episode.name.toString(),
-                    "",
-                    episode.episodeNumber.toString()
+                    tvShow?.name.toString(),
+                    episode.episodeNumber.toString(),
+                    (episode.seasonNumber + 1).toString()
                 )
                 if (capVistos.contains(episode.id.toString())) capitulo.seen = true;
                 capitulos.add(capitulo)
@@ -109,5 +110,4 @@ class DetailsTvShowActivity : AppCompatActivity() {
         })
     }
 
-    }
 }

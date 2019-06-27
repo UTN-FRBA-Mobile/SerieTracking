@@ -1,41 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="80dp"
-              android:id="@+id/contenedor">
 
-    <TextView
-            android:paddingLeft="20dp"
-            android:text="Episodio"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/episodeTextView"/>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
+        android:layout_height="87dp"
+        android:orientation="vertical"
+
+        android:weightSum="5" android:padding="4dp" android:background="#EEE" android:layout_marginTop="5dp">
+
+
 
     <LinearLayout
-            android:id="@+id/eighty_percent_layout_holder"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:weightSum="1">
+            android:weightSum="5">
 
-        <TextView
-                android:id="@+id/titleTextView"
+
+        <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.8"
-                android:textSize="13sp"
-                android:paddingLeft="20dp"
-                android:paddingTop="7dp"
-                android:paddingBottom="15dp"
-                android:text="TituloCapitulo"/>
-        <TextView
-                android:id="@+id/numberOfEpisodeTextView"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:orientation="vertical">
+
+            <TextView
+                    android:text="Titulo de la serie"
+                    android:id="@+id/tituloSerie"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:paddingTop="2dp"
+                    android:paddingLeft="10dp" android:textColor="#3D3D3D" android:textSize="16dp"/>
+
+            <TextView
+                    android:text="S01 | E02"
+                    android:layout_width="match_parent"
+                    android:layout_height="33dp" android:id="@+id/numeroEpisodio" android:textColor="#000000"
+                    android:textStyle="bold" android:textSize="30dp" android:paddingLeft="10dp"
+            />
+            <TextView
+                    android:text="Titulo del caputlo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/tituloEpisodio" android:paddingLeft="10dp"
+                    android:paddingBottom="2dp" android:textSize="13dp"/>
+        </LinearLayout>
+
+        <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.2"
-                android:text="S3E41"
-        />
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+            <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" app:srcCompat="@drawable/seen" android:id="@+id/seen"/>
+        </LinearLayout>
+
+
     </LinearLayout>
-
 </LinearLayout>

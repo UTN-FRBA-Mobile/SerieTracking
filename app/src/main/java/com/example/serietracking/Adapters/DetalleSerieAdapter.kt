@@ -16,33 +16,30 @@ import kotlinx.android.synthetic.main.tvshowlayout.view.*
 
 class ListAdapter(private val list: List<Capitulo>, private val tvShow: TVShow?): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    var hasHeader = true;
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
         when (getItemViewType(position)) {
             CellType.HEADER.ordinal -> {
                 val headerViewHolder = holder as headerViewHolder
-
-                //      val headerViewHolder = holder as HeaderViewHolder
                 holder.bind(tvShow)
             }
             CellType.CONTENT.ordinal -> {
                 val headerViewHolder = holder as MovieViewHolder
+               if(tvShow==null)    holder.bind(list[position]) else
                 holder.bind(list[position - 1])
-                //           headerViewHolder.bindView(listOfMovies[position - 1])
 
             }
             CellType.FOOTER.ordinal -> {
-                //       val footerViewHolder = holder as FooterViewHolder
-                //      footerViewHolder.bindView()
             }
         }
 
-        //val movie: Capitulo = list[position]
-        // holder.bind(movie)
     }
 
-
     override fun getItemViewType(position: Int): Int {
+        if(tvShow==null) {
+           return CellType.CONTENT.ordinal
+        }
        return when (position) {
            0 -> CellType.HEADER.ordinal
            list.size + 1 -> CellType.FOOTER.ordinal
@@ -56,7 +53,6 @@ class ListAdapter(private val list: List<Capitulo>, private val tvShow: TVShow?)
         CONTENT(2)
     }
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflatedView = parent.inflate(R.layout.tvshow_details_episode, false)
 
@@ -66,16 +62,12 @@ class ListAdapter(private val list: List<Capitulo>, private val tvShow: TVShow?)
       //      CellType.FOOTER.ordinal -> FooterViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_item_recycler_header, parent, false))
             else -> MovieViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.tvshow_details_episode, parent, false))
         }
-
-    //    return MovieViewHolder(inflatedView)
     }
 
-
-
-
-
-
-    override fun getItemCount(): Int = list.size +  1
+    override fun getItemCount() : Int {
+        if(tvShow==null) return list.size
+        return (list.size +  1)
+    }
 }
 class headerViewHolder(v: View) : RecyclerView.ViewHolder(v), View.OnClickListener {
     override fun onClick(v: View?) {
@@ -115,9 +107,9 @@ class MovieViewHolder(v: View) : RecyclerView.ViewHolder(v), View.OnClickListene
 
     fun bind(episode: Capitulo) {
         this.episode = episode
-        view.titleTextView.text = episode.titulo
-        view.episodeTextView.text = ""
-        view.numberOfEpisodeTextView.text = episode.episodio
-        view.contenedor.setBackgroundColor(if (episode.seen) Color.GREEN else Color.WHITE )
+        view.tituloSerie.text = episode.serie
+        view.numeroEpisodio.text = "S" +episode.temporada+ " | " + "E"+episode.episodio
+        view.tituloEpisodio.text = episode.titulo
+        view.seen.setVisibility((if (episode.seen) View.VISIBLE else View.INVISIBLE ))
     }
 }
