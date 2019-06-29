@@ -2,6 +2,7 @@ package com.example.serietracking.network
 
 import com.example.serietracking.*
 import com.example.serietracking.account.dto.AccountResponse
+import com.example.serietracking.login.dto.CreateSessionLoginRequest
 import com.example.serietracking.login.dto.CreateSessionRequest
 import com.example.serietracking.login.dto.CreateSessionResponse
 import com.example.serietracking.login.dto.RequestTokenResponse
@@ -30,6 +31,9 @@ interface ApiInterface {
 
     @POST("authentication/session/new")
     fun createSession(@Query("api_key") api_key: String, @Body body: CreateSessionRequest): Call<CreateSessionResponse>
+
+    @POST("authentication/token/validate_with_login")
+    fun validateRequestTokenLogin(@Query("api_key") api_key: String, @Body body: CreateSessionLoginRequest): Call<RequestTokenResponse>
 
     @GET("account")
     fun getAccount(@Query("api_key") api_key: String, @Query("session_id") session_id: String): Call<AccountResponse>
