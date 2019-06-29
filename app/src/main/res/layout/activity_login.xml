@@ -7,10 +7,28 @@
     android:orientation="vertical"
     android:gravity="center"
     tools:context=".login.LoginActivity">
+        <EditText
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:ems="10"
+                android:id = "@+id/user"
+                android:hint = "Usuario"
+                android:focusable = "true"
+                android:textColorHighlight = "#ff7eff15"
+                android:textColorHint = "#ffff25e6" />
+        <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:id="@+id/pass"
+                android:textColorHint="#ffff299f"
+                android:hint="Password" />
         <Button android:id="@+id/postButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Login"
-            android:onClick="executeLogin"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Login"
+                android:onClick="executeLogin"
+                android:layout_marginTop="25dp"/>
 
 </LinearLayout>
