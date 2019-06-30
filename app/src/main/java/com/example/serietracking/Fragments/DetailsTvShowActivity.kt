@@ -42,22 +42,23 @@ class DetailsTvShowActivity : AppCompatActivity() {
             var prefs = getSharedPreferences("preferencias", 0)
             val capVistos = prefs!!.getStringSet("capVistos", HashSet<String>())
 
-            //TODO: Cada uno de los [] dentro de listSeasonModel es una temporada
-            for (episode in listSeasonModel[0].episodes) {
-                var capitulo = Capitulo(
-                    episode.id.toString(),
-                    episode.name.toString(),
-                    tvShow?.name.toString(),
-                    episode.episodeNumber.toString(),
-                    (episode.seasonNumber + 1).toString()
-                )
-                if (capVistos.contains(episode.id.toString())) capitulo.seen = true;
-                capitulos.add(capitulo)
+            var listSeasonModelOrdered = listSeasonModel.sortedBy { seasonModel -> seasonModel.seasonNumber }
+            for (season in listSeasonModelOrdered) {
+
+                for (episode in season.episodes) {
+                    var capitulo = Capitulo(
+                        episode.id.toString(),
+                        episode.name,
+                        tvShow?.name.toString(),
+                        episode.episodeNumber.toString(),
+                        (episode.seasonNumber + 1).toString()
+                    )
+                    if (capVistos.contains(episode.id.toString())) capitulo.seen = true
+                    capitulos.add(capitulo)
+                }
             }
             adapter = ListAdapter(capitulos, tvShow)
             detailsRecyclerView.adapter = adapter
-            print("llego")
-
         }
     }
 
@@ -79,18 +80,18 @@ class DetailsTvShowActivity : AppCompatActivity() {
                 val capVistos = prefs!!.getStringSet("capVistos",HashSet<String>())
 
                 if (direction == ItemTouchHelper.LEFT) {
-                    capitulos[position-1].seen = true;
-                    capVistos.add(capitulos[position-1].id);
-                    adapter.notifyDataSetChanged();
+                    capitulos[position-1].seen = true
+                    capVistos.add(capitulos[position-1].id)
+                    adapter.notifyDataSetChanged()
                 } else {
-                    capVistos.remove(capitulos[position-1].id);
-                    capitulos[position-1].seen = false;
-                    adapter.notifyDataSetChanged();
+                    capVistos.remove(capitulos[position-1].id)
+                    capitulos[position-1].seen = false
+                    adapter.notifyDataSetChanged()
 
                 }
-                editor.clear();
-                editor.putStringSet("capVistos", capVistos );
-                editor.commit();
+                editor.clear()
+                editor.putStringSet("capVistos", capVistos )
+                editor.commit()
             }
         }
 
