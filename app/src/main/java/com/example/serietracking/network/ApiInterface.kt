@@ -45,4 +45,7 @@ interface ApiInterface {
     @POST("account/{account_id}/favorite")
     fun addFavorite(@Path("account_id") account_id: Long,  @Query("api_key") api_key: String,  @Query("session_id") session_id: String, @Body body: AddToFavoriteRequest): Call<AddToFavoriteResponse>
 
+    @GET("search/tv")
+    fun searchTvShows(@Query("api_key") api_key: String, @Query("query") query: String, @Query("page") page: Long = 1): Call<TVModel>
+
 }
