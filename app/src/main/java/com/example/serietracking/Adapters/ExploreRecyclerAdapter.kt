@@ -55,6 +55,10 @@ class ExploreRecyclerAdapter(private val tvShows: MutableList<TVShow>,
                 view.addButton.text = "REMOVER SERIE DE MIS FAVORITOS"
             }
 
+            view.setOnClickListener {
+                listener.onTvShowUserSelected(tvShow)
+            }
+
             view.addButton.setOnClickListener {
                 listener.onTvShowSelected(tvShow, isFavorite)
             }
@@ -70,4 +74,5 @@ class ExploreRecyclerAdapter(private val tvShows: MutableList<TVShow>,
 interface TvShowListener {
     fun onTvShowSelected(tvShow: TVShow, isInFavorite: Boolean)
     fun getMorePages()
+    fun onTvShowUserSelected(tvShow: TVShow)
 }

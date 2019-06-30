@@ -1,6 +1,7 @@
 package com.example.serietracking.Fragments
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -94,6 +95,13 @@ class ExploreTVShowsFragment : Fragment() {
             override fun getMorePages() {
                 moreTvShows()
             }
+
+            override fun onTvShowUserSelected(tvShow: TVShow) {
+                val intent = Intent(getActivity(), DetailsTvShowActivity::class.java)
+                intent.putExtra("tvShow", tvShow)
+                getActivity()!!.startActivity(intent)
+            }
+
         })
         exploreRecyclerView.adapter = adapter
         linearLayoutManager = LinearLayoutManager(activity!!)
