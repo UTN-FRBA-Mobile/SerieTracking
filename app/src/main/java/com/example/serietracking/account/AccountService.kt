@@ -1,8 +1,7 @@
 package com.example.serietracking.account
 
-import com.example.serietracking.RichEpisode
+import com.example.serietracking.*
 import com.example.serietracking.multicall.MultiCallProccesor
-import com.example.serietracking.TVModel
 import com.example.serietracking.account.dto.AccountResponse
 import com.example.serietracking.multicall.Callable
 import com.example.serietracking.network.AddToFavoriteRequest
@@ -17,6 +16,7 @@ import java.time.LocalDate
 object AccountService {
     private var sessionId: String? = null
     private var accountID: Long? = null
+    private var nextEpisodesCache: List<RichEpisode> = ArrayList()
 
     fun setSessionId(sessionId: String) {
         this.sessionId = sessionId
@@ -42,7 +42,10 @@ object AccountService {
     fun getFavoriteNextCaps(callback: (List<RichEpisode>) -> Unit) {
         this.getFavorite(object: ErrorLoggingCallback<TVModel>() {
             override fun onResponse(call: Call<TVModel>, response: Response<TVModel>) {
-                this@AccountService.getNextCaps(response.body(), callback)
+                this@AccountService.getNextCaps(response.body(), {
+                    nextEpisodesCache = it
+                    callback(it)
+                })
             }
         })
     }
@@ -73,5 +76,9 @@ object AccountService {
                 callback(seasonsWithUpdates)
             }
         }
+    }
+
+    fun getCachedFavoriteNextCaps(): List<RichEpisode> {
+        return this.nextEpisodesCache
     }
 }

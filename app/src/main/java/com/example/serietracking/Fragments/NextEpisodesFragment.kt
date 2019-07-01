@@ -34,7 +34,7 @@ class NextEpisodesFragment : Fragment() {
                 episode.name,
                 richEpisode.tv!!.name,
                 episode.episodeNumber.toString(),
-                "234"
+                episode.seasonNumber.toString()
             )
         }
 
